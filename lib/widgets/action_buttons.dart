@@ -4,10 +4,37 @@ import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
 
-class ActionButtons extends StatelessWidget {
+class ActionButtons extends StatefulWidget {
   const ActionButtons({
     super.key,
   });
+
+  @override
+  State<ActionButtons> createState() => _ActionButtonsState();
+}
+
+class _ActionButtonsState extends State<ActionButtons>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: Durations.long2,
+    );
+
+    animation = Tween<double>(begin: 0, end: 1).animate(controller);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +66,18 @@ class ActionButtons extends StatelessWidget {
               tooltip: state.status == TimerStatus.stopped
                   ? l10n.startTimer
                   : l10n.pauseTimer,
-              onPressed: () => context.read<TimerCubit>().toggle(),
-              icon: Icon(
-                state.status == TimerStatus.running
-                    ? Icons.pause
-                    : Icons.play_arrow,
+              onPressed: () {
+                if (state.status == TimerStatus.stopped) {
+                  controller.forward();
+                } else {
+                  controller.reverse();
+                }
+
+                context.read<TimerCubit>().toggle();
+              },
+              icon: AnimatedIcon(
+                icon: AnimatedIcons.play_pause,
+                progress: animation,
               ),
             ),
             const SizedBox(width: 16),
