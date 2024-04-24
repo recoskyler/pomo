@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pomo/counter/counter.dart';
+import 'package:pomo/timer/timer.dart';
 import 'package:pomo/l10n/l10n.dart';
 
 class App extends StatelessWidget {
@@ -9,14 +9,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        ),
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
       ),
       localizationsDelegates: S.localizationsDelegates,
       supportedLocales: S.supportedLocales,
-      home: const CounterPage(),
+      home: const TimerPage(),
     );
   }
 }

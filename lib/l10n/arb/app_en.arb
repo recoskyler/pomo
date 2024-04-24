@@ -1,7 +1,23 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
+
+    "lap": "Lap #{lap} 💻",
+    "@lap": {
+        "placeholders": {
+            "lap": {
+                "type": "num"
+            }
+        }
+    },
+
+    "shortBreak": "Short break #{lap} ☕",
+    "@shortBreak": {
+        "placeholders": {
+            "lap": {
+                "type": "num"
+            }
+        }
+    },
+
+    "longBreak": "Long break 🏖"
 }

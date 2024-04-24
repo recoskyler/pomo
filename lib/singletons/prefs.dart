@@ -72,6 +72,8 @@ class Prefs {
 
   static const String _themeModeVarName = 'pomo_theme_mode';
   static const String _languageVarName = 'pomo_language';
+  static const String _lapCountVarName = 'pomo_lap_count';
+  static const String _autoAdvanceVarName = 'pomo_auto_advance';
   static const String _longBreakMinutesVarName = 'pomo_long_break_minutes';
   static const String _shortBreakMinutesVarName = 'pomo_short_break_minutes';
   static const String _workMinutesVarName = 'pomo_work_minutes';
@@ -113,15 +115,15 @@ class Prefs {
   }
 
   static int get longBreakMinutes {
-    return Prefs().sharedPreferences.getInt(_longBreakMinutesVarName) ?? 0;
+    return Prefs().sharedPreferences.getInt(_longBreakMinutesVarName) ?? 15;
   }
 
   static int get shortBreakMinutes {
-    return Prefs().sharedPreferences.getInt(_shortBreakMinutesVarName) ?? 0;
+    return Prefs().sharedPreferences.getInt(_shortBreakMinutesVarName) ?? 5;
   }
 
   static int get workMinutes {
-    return Prefs().sharedPreferences.getInt(_workMinutesVarName) ?? 0;
+    return Prefs().sharedPreferences.getInt(_workMinutesVarName) ?? 25;
   }
 
   static String get workStartWebHook {
@@ -171,81 +173,81 @@ class Prefs {
     return Prefs().sharedPreferences.getString(_resetTimerWebHookVarName) ?? '';
   }
 
+  static int get lapCount {
+    return Prefs().sharedPreferences.getInt(_lapCountVarName) ?? 4;
+  }
+
+  static bool get autoAdvance {
+    return Prefs().sharedPreferences.getBool(_autoAdvanceVarName) ?? false;
+  }
+
   //* Setters
 
-  static Future<bool> setThemeMode(ThemeMode value) {
-    return Prefs().sharedPreferences.setString(_themeModeVarName, value.name);
+  static set themeMode(ThemeMode value) {
+    Prefs().sharedPreferences.setString(_themeModeVarName, value.name);
   }
 
-  static Future<bool> setLanguage(Locale value) {
-    return Prefs()
-        .sharedPreferences
-        .setString(_languageVarName, value.languageCode);
+  static set language(Locale value) {
+    Prefs().sharedPreferences.setString(_languageVarName, value.languageCode);
   }
 
-  static Future<bool> setLongBreakMinutes(int value) {
-    return Prefs().sharedPreferences.setInt(_longBreakMinutesVarName, value);
+  static set longBreakMinutes(int value) {
+    Prefs().sharedPreferences.setInt(_longBreakMinutesVarName, value);
   }
 
-  static Future<bool> setShortBreakMinutes(int value) {
-    return Prefs().sharedPreferences.setInt(_shortBreakMinutesVarName, value);
+  static set shortBreakMinutes(int value) {
+    Prefs().sharedPreferences.setInt(_shortBreakMinutesVarName, value);
   }
 
-  static Future<bool> setWorkMinutes(int value) {
-    return Prefs().sharedPreferences.setInt(_workMinutesVarName, value);
+  static set workMinutes(int value) {
+    Prefs().sharedPreferences.setInt(_workMinutesVarName, value);
   }
 
-  static Future<bool> setWorkStartWebHook(String value) {
-    return Prefs().sharedPreferences.setString(_workStartWebHookVarName, value);
+  static set workStartWebHook(String value) {
+    Prefs().sharedPreferences.setString(_workStartWebHookVarName, value);
   }
 
-  static Future<bool> setWorkEndWebHook(String value) {
-    return Prefs().sharedPreferences.setString(_workEndWebHookVarName, value);
+  static set workEndWebHook(String value) {
+    Prefs().sharedPreferences.setString(_workEndWebHookVarName, value);
   }
 
-  static Future<bool> setShortBreakStartWebHook(String value) {
-    return Prefs()
-        .sharedPreferences
-        .setString(_shortBreakStartWebHookVarName, value);
+  static set shortBreakStartWebHook(String value) {
+    Prefs().sharedPreferences.setString(_shortBreakStartWebHookVarName, value);
   }
 
-  static Future<bool> setShortBreakEndWebHook(String value) {
-    return Prefs()
-        .sharedPreferences
-        .setString(_shortBreakEndWebHookVarName, value);
+  static set shortBreakEndWebHook(String value) {
+    Prefs().sharedPreferences.setString(_shortBreakEndWebHookVarName, value);
   }
 
-  static Future<bool> setLongBreakStartWebHook(String value) {
-    return Prefs()
-        .sharedPreferences
-        .setString(_longBreakStartWebHookVarName, value);
+  static set longBreakStartWebHook(String value) {
+    Prefs().sharedPreferences.setString(_longBreakStartWebHookVarName, value);
   }
 
-  static Future<bool> setLongBreakEndWebHook(String value) {
-    return Prefs()
-        .sharedPreferences
-        .setString(_longBreakEndWebHookVarName, value);
+  static set longBreakEndWebHook(String value) {
+    Prefs().sharedPreferences.setString(_longBreakEndWebHookVarName, value);
   }
 
-  static Future<bool> setStateChangeWebHook(String value) {
-    return Prefs()
-        .sharedPreferences
-        .setString(_stateChangeWebHookVarName, value);
+  static set stateChangeWebHook(String value) {
+    Prefs().sharedPreferences.setString(_stateChangeWebHookVarName, value);
   }
 
-  static Future<bool> setStartTimerWebHook(String value) {
-    return Prefs()
-        .sharedPreferences
-        .setString(_startTimerWebHookVarName, value);
+  static set startTimerWebHook(String value) {
+    Prefs().sharedPreferences.setString(_startTimerWebHookVarName, value);
   }
 
-  static Future<bool> setStopTimerWebHook(String value) {
-    return Prefs().sharedPreferences.setString(_stopTimerWebHookVarName, value);
+  static set stopTimerWebHook(String value) {
+    Prefs().sharedPreferences.setString(_stopTimerWebHookVarName, value);
   }
 
-  static Future<bool> setResetTimerWebHook(String value) {
-    return Prefs()
-        .sharedPreferences
-        .setString(_resetTimerWebHookVarName, value);
+  static set resetTimerWebHook(String value) {
+    Prefs().sharedPreferences.setString(_resetTimerWebHookVarName, value);
+  }
+
+  static set lapCount(int value) {
+    Prefs().sharedPreferences.setInt(_lapCountVarName, value);
+  }
+
+  static set autoAdvance(bool value) {
+    Prefs().sharedPreferences.setBool(_autoAdvanceVarName, value);
   }
 }
