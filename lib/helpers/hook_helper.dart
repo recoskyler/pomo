@@ -10,32 +10,51 @@ enum TriggerMethod {
 
 mixin HookHelper {
   static Future<void> postWebHook(
-    String? url, [
+    String? urls, [
     TriggerMethod? method = TriggerMethod.post,
   ]) async {
-    if (url == null || url.isEmpty) {
+    if (urls == null || urls.isEmpty) {
       return;
     }
 
-    try {
-      Logger().d('POSTing webhook to $url');
+    final urlList = urls
+        .split(',')
+        .where((url) {
+          if (url.isEmpty) {
+            return false;
+          }
 
-      final dio = Dio();
+          try {
+            Uri.parse(url);
+            return true;
+          } catch (_) {
+            return false;
+          }
+        })
+        .map((e) => e.trim())
+        .toList();
 
-      final options = RequestOptions(
-        method: method.toString().split('.').last.toUpperCase(),
-        baseUrl: url,
-        validateStatus: (status) =>
-            status != null && status >= 200 && status < 300,
-      );
+    for (final url in urlList) {
+      try {
+        Logger().d('POSTing webhook to $url');
 
-      await dio.fetch<dynamic>(options);
-    } catch (e, s) {
-      Logger().e(
-        'Failed to ${method.toString().toUpperCase()} webhook to $url',
-        error: e,
-        stackTrace: s,
-      );
+        final dio = Dio();
+
+        final options = RequestOptions(
+          method: method.toString().split('.').last.toUpperCase(),
+          baseUrl: url,
+          validateStatus: (status) =>
+              status != null && status >= 200 && status < 300,
+        );
+
+        await dio.fetch<dynamic>(options);
+      } catch (e, s) {
+        Logger().e(
+          'Failed to ${method.toString().toUpperCase()} webhook to $url',
+          error: e,
+          stackTrace: s,
+        );
+      }
     }
   }
 }

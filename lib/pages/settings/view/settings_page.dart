@@ -79,10 +79,8 @@ class WebHooksToggle extends StatelessWidget {
             return SwitchListTile(
               value: state.enableWebHooks,
               title: Text(l10n.enableWebhooks),
-              onChanged: timerState.status == TimerStatus.stopped
-                  ? (val) =>
-                      context.read<SettingsCubit>().setEnableWebHooks(val)
-                  : null,
+              onChanged: (val) =>
+                  context.read<SettingsCubit>().setEnableWebHooks(val),
             );
           },
         );
@@ -109,6 +107,11 @@ class WebHooksExpansion extends StatelessWidget {
           shape: const Border(),
           childrenPadding: const EdgeInsets.all(16),
           children: [
+            Text(
+              l10n.webhooksDescription,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(height: 32),
             const TriggerMethodDropdown(),
             const SizedBox(height: 16),
             Text(
@@ -347,6 +350,7 @@ class AutoAdvanceInput extends StatelessWidget {
             return SwitchListTile(
               value: state.autoAdvance,
               title: Text(l10n.autoAdvance),
+              subtitle: Text(l10n.autoAdvanceDescription),
               onChanged: timerState.status == TimerStatus.stopped
                   ? (val) => context.read<SettingsCubit>().setAutoAdvance(val)
                   : null,
