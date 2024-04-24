@@ -13,9 +13,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.1
-
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Cache Flutter dependencies
@@ -64,9 +64,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.1
-
       - uses: actions/setup-java@v1
         with:
+          distribution: 'adopt'
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Cache Flutter dependencies
@@ -115,9 +115,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.1.1
-
       - uses: actions/setup-java@v1
         with:
+          distribution: 'adopt'
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Cache Flutter dependencies
@@ -177,7 +177,7 @@ jobs:
         run: flutter pub get
 
       - name: Generate intermediates
-        run: flutter pub run build_runner build --delete-conflicting-outputs
+        run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Enable windows build
         run: flutter config --enable-windows-desktop
