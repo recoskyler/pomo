@@ -21,11 +21,13 @@ dependencies:
   logger: ^2.2.0
   package_info_plus: ^8.0.0
   shared_preferences: ^2.2.3
+  url_launcher: ^6.2.6
   window_manager: ^0.3.8
 
 dev_dependencies:
   bloc_test: ^9.1.6
   flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.3
@@ -35,9 +37,17 @@ flutter:
   uses-material-design: true
   generate: true
 
+  fonts:
+    - family: Major Mono Display
+      fonts:
+        - asset: fonts/MajorMonoDisplay-Regular.ttf
+
   assets:
     - 'assets/sounds/click.aac'
     - 'assets/sounds/pop.aac'
     - 'assets/sounds/ding_dong.aac'
     - 'assets/images/pomo_logo.svg'
     - 'assets/images/pomo_logo.png'
+    - 'assets/images/pomo_logo_dark.svg'
+    - 'assets/images/pomo_logo_dark.png'
+    - 'assets/images/pomo_splash.png'

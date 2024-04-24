@@ -1,11 +1,21 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logger/web.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pomo/l10n/l10n.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
+
+  Future<void> _launchUrl() async {
+    final uri = Uri.parse('https://github.com/recoskyler');
+
+    if (!await launchUrl(uri)) {
+      Logger().e('Failed to launch GitHub link');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +32,17 @@ class AboutPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
-                  'assets/images/pomo_logo.svg',
+                  Theme.of(context).brightness == Brightness.dark
+                      ? 'assets/images/pomo_logo.svg'
+                      : 'assets/images/pomo_logo_dark.svg',
                   width: MediaQuery.of(context).size.shortestSide * 0.4,
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Pomo',
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  'pOmo',
+                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                        fontFamily: 'Major Mono Display',
+                      ),
                 ),
                 const SizedBox(height: 16),
                 FutureBuilder<PackageInfo>(
@@ -62,6 +76,23 @@ class AboutPage extends StatelessWidget {
 
                     return const SizedBox();
                   },
+                ),
+                const SizedBox(height: 16),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(text: l10n.madeBy1),
+                      TextSpan(
+                        text: 'recoskyler',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                        recognizer: TapGestureRecognizer()..onTap = _launchUrl,
+                      ),
+                      TextSpan(text: l10n.madeBy2),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -95,5 +95,8 @@
 
     "triggerMethod": "Trigger method",
     "mute": "Mute",
-    "unmute": "Unmute"
+    "unmute": "Unmute",
+
+    "madeBy1": "Made by ",
+    "madeBy2": " - 2024"
 }
