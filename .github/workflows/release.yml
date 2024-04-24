@@ -16,17 +16,17 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: ${{ env.JAVA_VERSION }}
+          java-version: 17
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v3.3.2
         with:
           path: /opt/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
+          key: ${{ runner.OS }}-flutter-install-cache-3.19.6
 
       - uses: subosito/flutter-action@v2.12.0
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: 3.19.6
 
       - run: flutter doctor -v
 
@@ -67,17 +67,17 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           distribution: 'adopt'
-          java-version: ${{ env.JAVA_VERSION }}
+          java-version: 17
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v3.3.2
         with:
           path: /opt/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
+          key: ${{ runner.OS }}-flutter-install-cache-3.19.6
 
       - uses: subosito/flutter-action@v2.12.0
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: 3.19.6
 
       - run: flutter doctor -v
 
@@ -118,17 +118,17 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           distribution: 'adopt'
-          java-version: ${{ env.JAVA_VERSION }}
+          java-version: 17
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v3.3.2
         with:
           path: /opt/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
+          key: ${{ runner.OS }}-flutter-install-cache-3.19.6
 
       - uses: subosito/flutter-action@v2.12.0
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: 3.19.6
 
       - run: flutter doctor -v
 
@@ -171,7 +171,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: 17
 
       - name: Install project dependencies
         run: flutter pub get
