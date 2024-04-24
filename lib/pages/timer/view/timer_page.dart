@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/web.dart';
 import 'package:pomo/helpers/hook_helper.dart';
@@ -170,6 +172,7 @@ class TimerView extends StatefulWidget {
 
 class _TimerViewState extends State<TimerView> {
   late Timer _timer;
+  late FocusNode _focusNode;
 
   @override
   void initState() {
@@ -178,11 +181,14 @@ class _TimerViewState extends State<TimerView> {
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       context.read<TimerCubit>().tick(context.read<SettingsCubit>().state);
     });
+
+    _focusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _timer.cancel();
+    _focusNode.dispose();
 
     super.dispose();
   }
@@ -213,15 +219,41 @@ class _TimerViewState extends State<TimerView> {
           ),
         ],
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Center(child: TimerProgress()),
-              Center(child: TimerText()),
-            ],
+          padding: const EdgeInsets.all(16),
+          child: BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, state) {
+              return KeyboardListener(
+                focusNode: _focusNode,
+                autofocus: true,
+                onKeyEvent: (value) {
+                  if (value is! KeyUpEvent) {
+                    return;
+                  }
+
+                  switch (value.logicalKey) {
+                    case LogicalKeyboardKey.enter:
+                      context.read<TimerCubit>().toggle();
+                    case LogicalKeyboardKey.space:
+                      context.read<TimerCubit>().toggle();
+                    case LogicalKeyboardKey.backspace:
+                      context.read<TimerCubit>().reset();
+                    case LogicalKeyboardKey.keyR:
+                      context.read<TimerCubit>().reset();
+                    case LogicalKeyboardKey.keyS:
+                      context.read<TimerCubit>().lap(settingsState: state);
+                  }
+                },
+                child: const Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Center(child: TimerProgress()),
+                    Center(child: TimerText()),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       ),
