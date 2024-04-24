@@ -15,7 +15,6 @@ class SettingsState extends Equatable {
     this.shortBreakEndWebHook = '',
     this.longBreakStartWebHook = '',
     this.longBreakEndWebHook = '',
-    this.stateChangeWebHook = '',
     this.startTimerWebHook = '',
     this.stopTimerWebHook = '',
     this.resetTimerWebHook = '',
@@ -43,7 +42,6 @@ class SettingsState extends Equatable {
   final String shortBreakEndWebHook;
   final String longBreakStartWebHook;
   final String longBreakEndWebHook;
-  final String stateChangeWebHook;
   final String startTimerWebHook;
   final String stopTimerWebHook;
   final String resetTimerWebHook;
@@ -66,7 +64,6 @@ class SettingsState extends Equatable {
     String Function()? shortBreakEndWebHook,
     String Function()? longBreakStartWebHook,
     String Function()? longBreakEndWebHook,
-    String Function()? stateChangeWebHook,
     String Function()? startTimerWebHook,
     String Function()? stopTimerWebHook,
     String Function()? resetTimerWebHook,
@@ -102,9 +99,6 @@ class SettingsState extends Equatable {
       longBreakEndWebHook: longBreakEndWebHook != null
           ? longBreakEndWebHook()
           : this.longBreakEndWebHook,
-      stateChangeWebHook: stateChangeWebHook != null
-          ? stateChangeWebHook()
-          : this.stateChangeWebHook,
       startTimerWebHook: startTimerWebHook != null
           ? startTimerWebHook()
           : this.startTimerWebHook,
@@ -134,7 +128,6 @@ class SettingsState extends Equatable {
         shortBreakEndWebHook,
         longBreakStartWebHook,
         longBreakEndWebHook,
-        stateChangeWebHook,
         startTimerWebHook,
         stopTimerWebHook,
         resetTimerWebHook,

@@ -24,7 +24,6 @@ class SettingsCubit extends Cubit<SettingsState> {
         shortBreakEndWebHook: Prefs.shortBreakEndWebHook,
         longBreakStartWebHook: Prefs.longBreakStartWebHook,
         longBreakEndWebHook: Prefs.longBreakEndWebHook,
-        stateChangeWebHook: Prefs.stateChangeWebHook,
         startTimerWebHook: Prefs.startTimerWebHook,
         stopTimerWebHook: Prefs.stopTimerWebHook,
         resetTimerWebHook: Prefs.resetTimerWebHook,
@@ -98,11 +97,6 @@ class SettingsCubit extends Cubit<SettingsState> {
   void setLongBreakEndWebHook(String value) {
     Prefs.longBreakEndWebHook = value;
     emit(state.copyWith(longBreakEndWebHook: () => value));
-  }
-
-  void setStateChangeWebHook(String value) {
-    Prefs.stateChangeWebHook = value;
-    emit(state.copyWith(stateChangeWebHook: () => value));
   }
 
   void setStartTimerWebHook(String value) {

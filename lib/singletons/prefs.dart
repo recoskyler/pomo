@@ -87,7 +87,6 @@ class Prefs {
       'pomo_long_break_start_webhook';
   static const String _longBreakEndWebHookVarName =
       'pomo_long_break_end_webhook';
-  static const String _stateChangeWebHookVarName = 'pomo_state_change_webhook';
   static const String _startTimerWebHookVarName = 'pomo_start_timer_webhook';
   static const String _stopTimerWebHookVarName = 'pomo_stop_timer_webhook';
   static const String _resetTimerWebHookVarName = 'pomo_reset_timer_webhook';
@@ -156,11 +155,6 @@ class Prefs {
 
   static String get longBreakEndWebHook {
     return Prefs().sharedPreferences.getString(_longBreakEndWebHookVarName) ??
-        '';
-  }
-
-  static String get stateChangeWebHook {
-    return Prefs().sharedPreferences.getString(_stateChangeWebHookVarName) ??
         '';
   }
 
@@ -240,10 +234,6 @@ class Prefs {
 
   static set longBreakEndWebHook(String value) {
     Prefs().sharedPreferences.setString(_longBreakEndWebHookVarName, value);
-  }
-
-  static set stateChangeWebHook(String value) {
-    Prefs().sharedPreferences.setString(_stateChangeWebHookVarName, value);
   }
 
   static set startTimerWebHook(String value) {
