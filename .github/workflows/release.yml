@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v4.1.1
       - uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
-          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'zulu'
+          java-version-file: '.java-version'
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v4.0.2
@@ -66,8 +66,8 @@ jobs:
       - uses: actions/checkout@v4.1.1
       - uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
-          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'zulu'
+          java-version-file: '.java-version'
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v4.0.2
@@ -117,8 +117,8 @@ jobs:
       - uses: actions/checkout@v4.1.1
       - uses: actions/setup-java@v4
         with:
-          distribution: 'adopt'
-          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'zulu'
+          java-version-file: '.java-version'
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v4.0.2
