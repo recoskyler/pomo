@@ -193,12 +193,7 @@ class _TimerViewState extends State<TimerView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'pOmo',
-          style: TextStyle(
-            fontFamily: 'Major Mono Display',
-          ),
-        ),
+        title: Text(l10n.timer),
         leading: BlocBuilder<SettingsCubit, SettingsState>(
           builder: (context, state) {
             return IconButton(
