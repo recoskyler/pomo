@@ -7,6 +7,7 @@ environment:
   sdk: "^3.3.0"
 
 dependencies:
+  audioplayers: ^6.0.0
   bloc: ^8.1.3
   equatable: ^2.0.5
   flutter:
@@ -16,6 +17,7 @@ dependencies:
     sdk: flutter
   intl: ^0.18.1
   shared_preferences: ^2.2.3
+  window_manager: ^0.3.8
 
 dev_dependencies:
   bloc_test: ^9.1.6
@@ -27,3 +29,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - 'assets/sounds/click.aac'
+    - 'assets/sounds/pop.aac'
+    - 'assets/sounds/ding_dong.aac'
