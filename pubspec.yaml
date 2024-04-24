@@ -16,8 +16,10 @@ dependencies:
   flutter_bloc: ^8.1.4
   flutter_localizations:
     sdk: flutter
+  flutter_svg: ^2.0.10+1
   intl: ^0.18.1
   logger: ^2.2.0
+  package_info_plus: ^8.0.0
   shared_preferences: ^2.2.3
   window_manager: ^0.3.8
 
@@ -36,3 +38,5 @@ flutter:
     - 'assets/sounds/click.aac'
     - 'assets/sounds/pop.aac'
     - 'assets/sounds/ding_dong.aac'
+    - 'assets/images/pomo_logo.svg'
+    - 'assets/images/pomo_logo.png'
