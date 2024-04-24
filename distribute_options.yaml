@@ -7,3 +7,8 @@ releases:
         package:
           platform: linux
           target: deb
+
+      - name: release-dev-linux-rpm
+        package:
+          platform: linux
+          target: rpm
