@@ -525,21 +525,22 @@ class TriggerMethodDropdown extends StatelessWidget {
         const SizedBox(height: 8),
         BlocBuilder<SettingsCubit, SettingsState>(
           builder: (context, state) {
-            return Wrap(
-              alignment: WrapAlignment.spaceEvenly,
-              children: TriggerMethod.values
+            return SegmentedButton<TriggerMethod>(
+              showSelectedIcon: false,
+              segments: TriggerMethod.values
                   .map(
-                    (e) => ChoiceChip(
-                      showCheckmark: false,
-                      selected: e == state.triggerMethod,
-                      onSelected: (value) =>
-                          context.read<SettingsCubit>().setTriggerMethod(e),
+                    (e) => ButtonSegment(
+                      value: e,
                       label: Text(
-                        e.toString().split('.').last.toUpperCase(),
+                        e.name.split('.').last.toUpperCase(),
                       ),
                     ),
                   )
                   .toList(),
+              selected: {state.triggerMethod},
+              onSelectionChanged: (val) => context
+                  .read<SettingsCubit>()
+                  .setTriggerMethod(val.firstOrNull ?? TriggerMethod.post),
             );
           },
         ),
