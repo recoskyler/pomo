@@ -192,38 +192,42 @@ class _TimerViewState extends State<TimerView> {
     final l10n = context.l10n;
 
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            const Center(child: TimerProgress()),
-            const Center(child: TimerText()),
-            Positioned(
-              top: 16,
-              right: 16,
-              child: IconButton(
-                tooltip: l10n.settings,
-                icon: const Icon(Icons.settings),
-                onPressed: () => Navigator.pushNamed(context, '/settings'),
+      appBar: AppBar(
+        title: const Text(
+          'pOmo',
+          style: TextStyle(
+            fontFamily: 'Major Mono Display',
+          ),
+        ),
+        leading: BlocBuilder<SettingsCubit, SettingsState>(
+          builder: (context, state) {
+            return IconButton(
+              tooltip: state.enableSound ? l10n.mute : l10n.unmute,
+              icon: Icon(
+                state.enableSound ? Icons.volume_up : Icons.volume_off,
               ),
-            ),
-            Positioned(
-              top: 16,
-              left: 16,
-              child: BlocBuilder<SettingsCubit, SettingsState>(
-                builder: (context, state) {
-                  return IconButton(
-                    tooltip: state.enableSound ? l10n.mute : l10n.unmute,
-                    icon: Icon(
-                      state.enableSound ? Icons.volume_up : Icons.volume_off,
-                    ),
-                    onPressed: () =>
-                        context.read<SettingsCubit>().toggleSound(),
-                  );
-                },
-              ),
-            ),
-          ],
+              onPressed: () => context.read<SettingsCubit>().toggleSound(),
+            );
+          },
+        ),
+        actions: [
+          IconButton(
+            tooltip: l10n.settings,
+            icon: const Icon(Icons.settings),
+            onPressed: () => Navigator.pushNamed(context, '/settings'),
+          ),
+        ],
+      ),
+      body: const SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Center(child: TimerProgress()),
+              Center(child: TimerText()),
+            ],
+          ),
         ),
       ),
     );
