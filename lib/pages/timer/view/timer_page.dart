@@ -213,7 +213,7 @@ class _TimerViewState extends State<TimerView> {
               child: BlocBuilder<SettingsCubit, SettingsState>(
                 builder: (context, state) {
                   return IconButton(
-                    tooltip: l10n.toggleSound,
+                    tooltip: state.enableSound ? l10n.mute : l10n.unmute,
                     icon: Icon(
                       state.enableSound ? Icons.volume_up : Icons.volume_off,
                     ),
