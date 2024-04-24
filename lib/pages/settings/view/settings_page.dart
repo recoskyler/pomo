@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/l10n/l10n.dart';
@@ -40,6 +43,8 @@ class SettingsView extends StatelessWidget {
               SizedBox(height: 16),
               LongBreakDurationInput(),
               SizedBox(height: 16),
+              LapCountInput(),
+              SizedBox(height: 16),
               WebHooksToggle(),
               WebHooksExpansion(),
             ],
@@ -63,12 +68,13 @@ class WebHooksToggle extends StatelessWidget {
       builder: (context, state) {
         return BlocBuilder<TimerCubit, TimerState>(
           builder: (context, timerState) {
-            return CheckboxListTile(
-              enabled: timerState.status == TimerStatus.stopped,
+            return SwitchListTile(
               value: state.enableWebHooks,
               title: Text(l10n.enableWebhooks),
-              onChanged: (val) =>
-                  context.read<SettingsCubit>().setEnableWebHooks(val ?? false),
+              onChanged: timerState.status == TimerStatus.stopped
+                  ? (val) =>
+                      context.read<SettingsCubit>().setEnableWebHooks(val)
+                  : null,
             );
           },
         );
@@ -211,7 +217,7 @@ class WebHooksExpansion extends StatelessWidget {
                 hintText: 'https://example.com/api/v1/webhooks/stop-timer',
                 border: OutlineInputBorder(),
               ),
-              initialValue: state.workStartWebHook,
+              initialValue: state.stopTimerWebHook,
               onChanged: (value) =>
                   context.read<SettingsCubit>().setStopTimerWebHook(value),
             ),
@@ -229,21 +235,6 @@ class WebHooksExpansion extends StatelessWidget {
               initialValue: state.resetTimerWebHook,
               onChanged: (value) =>
                   context.read<SettingsCubit>().setResetTimerWebHook(value),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              l10n.stateChangeWebHookUrl,
-              style: Theme.of(context).textTheme.labelLarge,
-            ),
-            const SizedBox(height: 8),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'https://example.com/api/v1/webhooks/change',
-                border: OutlineInputBorder(),
-              ),
-              initialValue: state.stateChangeWebHook,
-              onChanged: (value) =>
-                  context.read<SettingsCubit>().setStateChangeWebHook(value),
             ),
           ],
         );
@@ -312,14 +303,19 @@ class AlwaysOnTopInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    if (kIsWeb ||
+        (!Platform.isWindows && !Platform.isLinux && !Platform.isMacOS)) {
+      return const SizedBox.shrink();
+    }
+
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        return CheckboxListTile(
+        return SwitchListTile(
           value: state.alwaysOnTop,
           title: Text(l10n.alwaysOnTop),
           subtitle: Text(l10n.requiresRestart),
           onChanged: (val) =>
-              context.read<SettingsCubit>().setAlwaysOnTop(val ?? false),
+              context.read<SettingsCubit>().setAlwaysOnTop(val),
         );
       },
     );
@@ -339,12 +335,12 @@ class AutoAdvanceInput extends StatelessWidget {
       builder: (context, state) {
         return BlocBuilder<TimerCubit, TimerState>(
           builder: (context, timerState) {
-            return CheckboxListTile(
-              enabled: timerState.status == TimerStatus.stopped,
+            return SwitchListTile(
               value: state.autoAdvance,
               title: Text(l10n.autoAdvance),
-              onChanged: (val) =>
-                  context.read<SettingsCubit>().setAutoAdvance(val ?? false),
+              onChanged: timerState.status == TimerStatus.stopped
+                  ? (val) => context.read<SettingsCubit>().setAutoAdvance(val)
+                  : null,
             );
           },
         );
@@ -473,6 +469,32 @@ class LongBreakDurationInput extends StatelessWidget {
           value: state.longBreakMinutes,
           onChanged: (val) {
             context.read<SettingsCubit>().setLongBreakMinutes(val.toInt());
+            context.read<TimerCubit>().reset();
+          },
+        );
+      },
+    );
+  }
+}
+
+class LapCountInput extends StatelessWidget {
+  const LapCountInput({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, state) {
+        return SliderInput(
+          title: l10n.lapCount,
+          value: state.lapCount,
+          max: 8,
+          min: 3,
+          onChanged: (val) {
+            context.read<SettingsCubit>().setLapCount(val.toInt());
             context.read<TimerCubit>().reset();
           },
         );
