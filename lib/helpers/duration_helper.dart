@@ -1,5 +1,5 @@
-import 'package:pomo/singletons/prefs.dart';
-import 'package:pomo/timer/cubit/timer_cubit.dart';
+import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
+import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
 
 mixin DurationHelper {
   static String format(Duration duration) {
@@ -16,16 +16,17 @@ mixin DurationHelper {
   static String negativeFormat({
     required Duration duration,
     required TimerLap lap,
+    required SettingsState settingsState,
   }) {
     var negativeDuration = Duration.zero;
 
     switch (lap) {
       case TimerLap.work:
-        negativeDuration = Duration(minutes: Prefs.workMinutes);
+        negativeDuration = Duration(minutes: settingsState.workMinutes);
       case TimerLap.shortBreak:
-        negativeDuration = Duration(minutes: Prefs.shortBreakMinutes);
+        negativeDuration = Duration(minutes: settingsState.shortBreakMinutes);
       case TimerLap.longBreak:
-        negativeDuration = Duration(minutes: Prefs.longBreakMinutes);
+        negativeDuration = Duration(minutes: settingsState.longBreakMinutes);
     }
 
     final newDuration = negativeDuration - duration;
@@ -36,50 +37,49 @@ mixin DurationHelper {
   static bool isLapComplete({
     required Duration duration,
     required TimerLap lap,
+    required SettingsState settingsState,
   }) {
     if (lap == TimerLap.work) {
-      return isWorkComplete(duration);
+      return isWorkComplete(duration, settingsState);
     } else if (lap == TimerLap.shortBreak) {
-      return isShortBreakComplete(duration);
+      return isShortBreakComplete(duration, settingsState);
     } else {
-      return isLongBreakComplete(duration);
+      return isLongBreakComplete(duration, settingsState);
     }
   }
 
-  static bool isWorkComplete(Duration duration) {
-    return duration.inSeconds >= Prefs.workMinutes * 60;
+  static bool isWorkComplete(
+    Duration duration,
+    SettingsState settingsState,
+  ) {
+    return duration.inSeconds >= settingsState.workMinutes * 60;
   }
 
-  static bool isShortBreakComplete(Duration duration) {
-    return duration.inSeconds >= Prefs.shortBreakMinutes * 60;
+  static bool isShortBreakComplete(
+    Duration duration,
+    SettingsState settingsState,
+  ) {
+    return duration.inSeconds >= settingsState.shortBreakMinutes * 60;
   }
 
-  static bool isLongBreakComplete(Duration duration) {
-    return duration.inSeconds >= Prefs.longBreakMinutes * 60;
-  }
-
-  static Duration get getWorkDuration {
-    return Duration(minutes: Prefs.workMinutes);
-  }
-
-  static Duration get getShortBreakDuration {
-    return Duration(minutes: Prefs.shortBreakMinutes);
-  }
-
-  static Duration get getLongBreakDuration {
-    return Duration(minutes: Prefs.longBreakMinutes);
+  static bool isLongBreakComplete(
+    Duration duration,
+    SettingsState settingsState,
+  ) {
+    return duration.inSeconds >= settingsState.longBreakMinutes * 60;
   }
 
   static double getProgress({
     required Duration duration,
     required TimerLap lap,
+    required SettingsState settingsState,
   }) {
     if (lap == TimerLap.work) {
-      return 1 - (duration.inSeconds / (Prefs.workMinutes * 60));
+      return 1 - (duration.inSeconds / (settingsState.workMinutes * 60));
     } else if (lap == TimerLap.shortBreak) {
-      return 1 - (duration.inSeconds / (Prefs.shortBreakMinutes * 60));
+      return 1 - (duration.inSeconds / (settingsState.shortBreakMinutes * 60));
     } else {
-      return 1 - (duration.inSeconds / (Prefs.longBreakMinutes * 60));
+      return 1 - (duration.inSeconds / (settingsState.longBreakMinutes * 60));
     }
   }
 }
