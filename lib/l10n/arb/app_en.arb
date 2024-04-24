@@ -51,7 +51,15 @@
         }
     },
 
-    "lapCount": "Lap count",
+    "lapCount": "Lap count ({count} laps)",
+    "@lapCount": {
+        "placeholders": {
+            "count": {
+                "type": "num"
+            }
+        }
+    },
+
     "autoAdvance": "Auto advance",
     "alwaysOnTop": "Always on top",
 
