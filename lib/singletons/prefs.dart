@@ -91,6 +91,7 @@ class Prefs {
   static const String _startTimerWebHookVarName = 'pomo_start_timer_webhook';
   static const String _stopTimerWebHookVarName = 'pomo_stop_timer_webhook';
   static const String _resetTimerWebHookVarName = 'pomo_reset_timer_webhook';
+  static const String _alwaysOnTopVarName = 'pomo_always_on_top';
 
   //* Getters
 
@@ -181,6 +182,10 @@ class Prefs {
     return Prefs().sharedPreferences.getBool(_autoAdvanceVarName) ?? false;
   }
 
+  static bool get alwaysOnTop {
+    return Prefs().sharedPreferences.getBool(_alwaysOnTopVarName) ?? false;
+  }
+
   //* Setters
 
   static set themeMode(ThemeMode value) {
@@ -249,5 +254,9 @@ class Prefs {
 
   static set autoAdvance(bool value) {
     Prefs().sharedPreferences.setBool(_autoAdvanceVarName, value);
+  }
+
+  static set alwaysOnTop(bool value) {
+    Prefs().sharedPreferences.setBool(_alwaysOnTopVarName, value);
   }
 }
