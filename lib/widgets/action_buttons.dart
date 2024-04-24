@@ -19,6 +19,11 @@ class ActionButtons extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton.filledTonal(
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
+              style: IconButton.styleFrom(
+                backgroundColor:
+                    Theme.of(context).colorScheme.tertiaryContainer,
+              ),
               tooltip: l10n.reset,
               onPressed: state.status == TimerStatus.running
                   ? null
@@ -27,6 +32,10 @@ class ActionButtons extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             IconButton.filled(
+              style: IconButton.styleFrom(
+                fixedSize: const Size.square(64),
+                iconSize: 32,
+              ),
               tooltip: state.status == TimerStatus.stopped
                   ? l10n.startTimer
                   : l10n.pauseTimer,
