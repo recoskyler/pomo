@@ -5,7 +5,7 @@ on:
     tags: ['*']
 
 jobs:
-  build-and-release-rpm:
+  build-and-release-linux:
     runs-on: ubuntu-latest
 
     permissions:
@@ -45,92 +45,24 @@ jobs:
       - name: Build .rpm
         run: flutter_distributor release --name=dev --jobs=release-dev-linux-rpm
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1.13.0
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          artifacts: "dist/**/*.rpm"
-
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.3.3
-        with:
-          name: release-rpm
-          path: dist/
-
-  build-and-release-deb:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4.1.1
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version-file: '.java-version'
-
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v4.0.2
-        with:
-          path: /opt/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
-
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-
-      - run: flutter doctor -v
-
-      - name: Install build dependencies
-        run: sudo apt-get update && sudo apt-get install -y libunwind-dev libgtk-3-0 libblkid1 liblzma5 clang cmake git ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
-
-      - run: flutter clean
-      - run: flutter pub get
-
-      - name: Build release
-        run: flutter build linux --release
-
-      - name: Activate flutter_distributor
-        run: dart pub global activate flutter_distributor
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "dist/**/*.rpm"
+          asset_name: "pomo-linux-aarch64.rpm"
+          tag: ${{ github.ref }}
 
       - name: Build .deb
         run: flutter_distributor release --name=dev --jobs=release-dev-linux-deb
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1.13.0
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          artifacts: "dist/**/*.deb"
-
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.3.3
-        with:
-          name: release-deb
-          path: dist/
-
-  build-and-release-apk:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4.1.1
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version-file: '.java-version'
-
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v4.0.2
-        with:
-          path: /opt/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
-
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-
-      - run: flutter doctor -v
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "dist/**/*.deb"
+          asset_name: "pomo-linux-aarch64.deb"
+          tag: ${{ github.ref }}
 
       - name: Create the Keystore
         run: |
@@ -146,21 +78,16 @@ jobs:
           echo 'keyAlias=${{ secrets.KEYSTORE_PASSWORD_ALIAS }}' >> android/key.properties
           echo 'storeFile=app.keystore' >> android/key.properties
 
-      - run: flutter pub get
+      - name: Build APK
+        run: flutter build apk
 
-      - run: flutter build apk --split-per-abi
-      - run: flutter build appbundle
-
-      - name: Create Release
-        uses: ncipollo/release-action@v1.13.0
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          artifacts: "build/app/outputs/apk/release/*.apk, build/app/outputs/bundle/release/*.aab"
-
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.3.3
-        with:
-          name: release-apk
-          path: build/app/outputs/apk/
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "build/app/outputs/apk/release/*.apk"
+          asset_name: "pomo-${{github.ref_name}}-android.apk"
+          tag: ${{ github.ref }}
 
   build-and-release-exe:
     runs-on: windows-latest
@@ -186,16 +113,19 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          filename: pomo-${{github.ref_name}}-windows.zip
-          directory: build/windows/runner/Release
+          filename: pomo-${{github.ref_name}}-x86-64-windows.zip
+          directory: build/windows/x64/runner/Release
 
       - name: Create Release
         uses: ncipollo/release-action@v1.13.0
         with:
-          artifacts: "build/windows/runner/Release/pomo-${{github.ref_name}}-windows.zip"
+          artifacts: "build/windows/x64/runner/Release/pomo-${{github.ref_name}}-x86-64-windows.zip"
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.3.3
+      - name: Upload Files to a GitHub Release (Windows)
+        if: ${{ matrix.platform == 'windows-latest' }}
+        uses: svenstaro/upload-release-action@2.2.1
         with:
-          name: release-exe
-          path: build/windows/runner/Release/
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/windows/x64/runner/Release/pomo-${{github.ref_name}}-x86-64-windows.zip
+          asset_name: pomo-${{github.ref_name}}-x86-64-windows.zip
+          tag: ${{ github.ref }}
