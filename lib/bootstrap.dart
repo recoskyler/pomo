@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pomo/singletons/prefs.dart';
 import 'package:window_manager/window_manager.dart';
@@ -36,15 +37,15 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   await Prefs().init();
 
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+  if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     await windowManager.ensureInitialized();
 
     final windowOptions = WindowOptions(
-      size: const Size(400, 400),
+      size: const Size(500, 500),
       // center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
-      minimumSize: const Size(400, 400),
+      minimumSize: const Size(500, 500),
       title: 'Pomo',
       alwaysOnTop: Prefs.alwaysOnTop,
     );
