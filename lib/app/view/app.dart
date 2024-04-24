@@ -28,6 +28,7 @@ class App extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(
                 seedColor: Colors.redAccent,
               ),
+              appBarTheme: const AppBarTheme(centerTitle: true),
             ),
             darkTheme: ThemeData(
               useMaterial3: true,
@@ -35,6 +36,7 @@ class App extends StatelessWidget {
                 seedColor: Colors.redAccent,
                 brightness: Brightness.dark,
               ),
+              appBarTheme: const AppBarTheme(centerTitle: true),
             ),
             themeMode: state.themeMode,
             locale: state.locale,
