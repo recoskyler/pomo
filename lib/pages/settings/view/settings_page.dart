@@ -27,6 +27,13 @@ class SettingsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.settings),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help),
+            tooltip: l10n.about,
+            onPressed: () => Navigator.pushNamed(context, '/about'),
+          ),
+        ],
       ),
       body: const SafeArea(
         child: SingleChildScrollView(

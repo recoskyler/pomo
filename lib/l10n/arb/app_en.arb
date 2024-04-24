@@ -93,5 +93,7 @@
     "reset": "Reset",
     "skipLap": "Skip lap",
 
-    "triggerMethod": "Trigger method"
+    "triggerMethod": "Trigger method",
+    "mute": "Mute",
+    "unmute": "Unmute"
 }

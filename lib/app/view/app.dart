@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/l10n/l10n.dart';
-import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
+import 'package:pomo/pages/about/view/about_page.dart';
+import 'package:pomo/pages/deniz/deniz.dart';
 import 'package:pomo/pages/settings/settings.dart';
 import 'package:pomo/pages/timer/timer.dart';
 
@@ -43,6 +44,8 @@ class App extends StatelessWidget {
             routes: {
               '/': (context) => const TimerPage(),
               '/settings': (context) => const SettingsPage(),
+              '/about': (context) => const AboutPage(),
+              '/deniz': (context) => const DenizPage(),
             },
             initialRoute: '/',
           );
