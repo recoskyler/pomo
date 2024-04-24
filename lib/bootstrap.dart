@@ -41,7 +41,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
     final windowOptions = WindowOptions(
       size: const Size(400, 400),
-      center: true,
+      // center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
       minimumSize: const Size(400, 400),
