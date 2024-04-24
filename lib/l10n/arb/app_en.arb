@@ -1,7 +1,7 @@
 {
     "@@locale": "en",
 
-    "lap": "Lap #{lap} 💻",
+    "lap": "Lap #{lap}",
     "@lap": {
         "placeholders": {
             "lap": {
@@ -10,7 +10,7 @@
         }
     },
 
-    "shortBreak": "Short break #{lap} ☕",
+    "shortBreak": "Short break #{lap}",
     "@shortBreak": {
         "placeholders": {
             "lap": {
@@ -19,5 +19,69 @@
         }
     },
 
-    "longBreak": "Long break 🏖"
+    "longBreak": "Long break",
+
+    "settings": "Settings",
+    "about": "About",
+
+    "workDuration": "Work duration ({minutes} minutes)",
+    "@workDuration": {
+        "placeholders": {
+            "minutes": {
+                "type": "num"
+            }
+        }
+    },
+
+    "shortBreakDuration": "Short break duration ({minutes} minutes)",
+    "@shortBreakDuration": {
+        "placeholders": {
+            "minutes": {
+                "type": "num"
+            }
+        }
+    },
+
+    "longBreakDuration": "Long break duration ({minutes} minutes)",
+    "@longBreakDuration": {
+        "placeholders": {
+            "minutes": {
+                "type": "num"
+            }
+        }
+    },
+
+    "lapCount": "Lap count",
+    "autoAdvance": "Auto advance",
+    "alwaysOnTop": "Always on top",
+
+    "startWorkWebHookUrl": "Start work webhook URL",
+    "startShortBreakWebHookUrl": "Start short break webhook URL",
+    "startLongBreakWebHookUrl": "Start long break webhook URL",
+    "endWorkWebHookUrl": "End work webhook URL",
+    "endShortBreakWebHookUrl": "End short break webhook URL",
+    "endLongBreakWebHookUrl": "End long break webhook URL",
+    "startTimerWebHookUrl": "Start timer webhook URL",
+    "stopTimerWebHookUrl": "Stop timer webhook URL",
+    "resetTimerWebHookUrl": "Reset timer webhook URL",
+    "stateChangeWebHookUrl": "State change webhook URL",
+
+    "language": "Language",
+    "themeMode": "Theme mode",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "english": "English",
+
+    "requiresRestart": "Requires restart",
+
+    "webhooks": "Webhooks",
+    "enableWebhooks": "Enable Webhooks",
+
+    "toggleSound": "Toggle sound",
+
+    "startTimer": "Start timer",
+    "pauseTimer": "Pause timer",
+    "reset": "Reset",
+    "skipLap": "Skip lap"
 }
