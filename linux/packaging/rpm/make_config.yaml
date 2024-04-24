@@ -1,0 +1,26 @@
+display_name: Pomo
+icon: assets/images/pomo_logo.png
+summary: A simple, free, open-source, cross-platform Pomodoro timer app with WebHook support.
+group: Applications/Productivity
+vendor: Adil Atalay Hamamcioglu
+packager: Adil Atalay Hamamcioglu
+packagerEmail: 38231748+recoskyler@users.noreply.github.com
+license: MIT
+url: https://github.com/recoskyler/pomo
+
+build_arch: aarch64
+
+keywords:
+  - pomodoro
+  - timer
+  - pomo
+  - work
+  - schedule
+
+generic_name: Pomodoro Timer
+
+categories:
+  - Productivity
+  - Utility
+
+startup_notify: true
