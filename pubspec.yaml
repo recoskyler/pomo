@@ -51,3 +51,4 @@ flutter:
     - 'assets/images/pomo_logo_dark.svg'
     - 'assets/images/pomo_logo_dark.png'
     - 'assets/images/pomo_splash.png'
+    - 'fonts/MajorMonoDisplay-Regular.ttf'
