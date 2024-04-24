@@ -116,11 +116,6 @@ jobs:
           filename: pomo-${{github.ref_name}}-x86-64-windows.zip
           directory: build/windows/x64/runner/Release
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1.13.0
-        with:
-          artifacts: "build/windows/x64/runner/Release/pomo-${{github.ref_name}}-x86-64-windows.zip"
-
       - name: Upload Files to a GitHub Release (Windows)
         if: ${{ matrix.platform == 'windows-latest' }}
         uses: svenstaro/upload-release-action@2.2.1
