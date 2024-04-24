@@ -91,5 +91,7 @@
     "startTimer": "Start timer",
     "pauseTimer": "Pause timer",
     "reset": "Reset",
-    "skipLap": "Skip lap"
+    "skipLap": "Skip lap",
+
+    "triggerMethod": "Trigger method"
 }

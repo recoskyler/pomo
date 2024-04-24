@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pomo/helpers/hook_helper.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/timer.dart';
@@ -101,6 +102,8 @@ class WebHooksExpansion extends StatelessWidget {
           shape: const Border(),
           childrenPadding: const EdgeInsets.all(16),
           children: [
+            const TriggerMethodDropdown(),
+            const SizedBox(height: 16),
             Text(
               l10n.startWorkWebHookUrl,
               style: Theme.of(context).textTheme.labelLarge,
@@ -314,8 +317,7 @@ class AlwaysOnTopInput extends StatelessWidget {
           value: state.alwaysOnTop,
           title: Text(l10n.alwaysOnTop),
           subtitle: Text(l10n.requiresRestart),
-          onChanged: (val) =>
-              context.read<SettingsCubit>().setAlwaysOnTop(val),
+          onChanged: (val) => context.read<SettingsCubit>().setAlwaysOnTop(val),
         );
       },
     );
@@ -499,6 +501,49 @@ class LapCountInput extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+class TriggerMethodDropdown extends StatelessWidget {
+  const TriggerMethodDropdown({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          l10n.triggerMethod,
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+        const SizedBox(height: 8),
+        BlocBuilder<SettingsCubit, SettingsState>(
+          builder: (context, state) {
+            return Wrap(
+              alignment: WrapAlignment.spaceEvenly,
+              children: TriggerMethod.values
+                  .map(
+                    (e) => ChoiceChip(
+                      showCheckmark: false,
+                      selected: e == state.triggerMethod,
+                      onSelected: (value) =>
+                          context.read<SettingsCubit>().setTriggerMethod(e),
+                      label: Text(
+                        e.toString().split('.').last.toUpperCase(),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            );
+          },
+        ),
+      ],
     );
   }
 }

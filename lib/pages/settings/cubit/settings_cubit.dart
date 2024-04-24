@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:pomo/helpers/hook_helper.dart';
 import 'package:pomo/singletons/prefs.dart';
 
 part 'settings_state.dart';
@@ -28,6 +29,8 @@ class SettingsCubit extends Cubit<SettingsState> {
         stopTimerWebHook: Prefs.stopTimerWebHook,
         resetTimerWebHook: Prefs.resetTimerWebHook,
         enableWebHooks: Prefs.enableWebhooks,
+        enableSound: Prefs.enableSound,
+        triggerMethod: Prefs.triggerMethod,
       ),
     );
   }
@@ -123,5 +126,9 @@ class SettingsCubit extends Cubit<SettingsState> {
   // ignore: avoid_positional_boolean_parameters
   void toggleSound() {
     emit(state.copyWith(enableSound: () => !state.enableSound));
+  }
+
+  void setTriggerMethod(TriggerMethod value) {
+    emit(state.copyWith(triggerMethod: () => value));
   }
 }

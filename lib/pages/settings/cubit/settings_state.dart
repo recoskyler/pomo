@@ -21,6 +21,7 @@ class SettingsState extends Equatable {
     this.locale = const Locale('en'),
     this.enableWebHooks = false,
     this.enableSound = true,
+    this.triggerMethod = TriggerMethod.post,
   });
 
   final ThemeMode themeMode;
@@ -48,6 +49,8 @@ class SettingsState extends Equatable {
 
   final Locale locale;
 
+  final TriggerMethod triggerMethod;
+
   SettingsState copyWith({
     ThemeMode Function()? themeMode,
     bool Function()? alwaysOnTop,
@@ -68,6 +71,7 @@ class SettingsState extends Equatable {
     String Function()? stopTimerWebHook,
     String Function()? resetTimerWebHook,
     Locale Function()? locale,
+    TriggerMethod Function()? triggerMethod,
   }) {
     return SettingsState(
       themeMode: themeMode != null ? themeMode() : this.themeMode,
@@ -108,6 +112,8 @@ class SettingsState extends Equatable {
           ? resetTimerWebHook()
           : this.resetTimerWebHook,
       locale: locale != null ? locale() : this.locale,
+      triggerMethod:
+          triggerMethod != null ? triggerMethod() : this.triggerMethod,
     );
   }
 
@@ -132,6 +138,7 @@ class SettingsState extends Equatable {
         stopTimerWebHook,
         resetTimerWebHook,
         locale,
+        triggerMethod,
       ];
 }
 

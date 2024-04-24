@@ -1,8 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 
+enum TriggerMethod {
+  get,
+  post,
+  put,
+  patch,
+}
+
 mixin HookHelper {
-  static Future<void> postWebHook(String? url) async {
+  static Future<void> postWebHook(
+    String? url, [
+    TriggerMethod? method = TriggerMethod.post,
+  ]) async {
     if (url == null || url.isEmpty) {
       return;
     }
@@ -12,13 +22,20 @@ mixin HookHelper {
 
       final dio = Dio();
 
-      final options = Options(
-        validateStatus: (status) => status != null && status == 200,
+      final options = RequestOptions(
+        method: method.toString().split('.').last.toUpperCase(),
+        baseUrl: url,
+        validateStatus: (status) =>
+            status != null && status >= 200 && status < 300,
       );
 
-      await dio.post<dynamic>(url, options: options);
+      await dio.fetch<dynamic>(options);
     } catch (e, s) {
-      Logger().e('Failed to POST webhook to $url', error: e, stackTrace: s);
+      Logger().e(
+        'Failed to ${method.toString().toUpperCase()} webhook to $url',
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 }

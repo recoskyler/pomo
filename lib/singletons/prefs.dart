@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pomo/helpers/hook_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Singleton class for SharedPreferences
@@ -93,6 +94,7 @@ class Prefs {
   static const String _alwaysOnTopVarName = 'pomo_always_on_top';
   static const String _enableWebhooksVarName = 'pomo_enable_webhooks';
   static const String _enableSoundVarName = 'pomo_enable_sound';
+  static const String _triggerMethodVarName = 'pomo_trigger_method';
 
   //* Getters
 
@@ -190,6 +192,18 @@ class Prefs {
     return Prefs().sharedPreferences.getBool(_enableSoundVarName) ?? true;
   }
 
+  static TriggerMethod get triggerMethod {
+    return TriggerMethod.values
+            .where(
+              (e) =>
+                  e.toString() ==
+                  (Prefs().sharedPreferences.getString(_triggerMethodVarName) ??
+                      'TriggerMethod.post'),
+            )
+            .firstOrNull ??
+        TriggerMethod.post;
+  }
+
   //* Setters
 
   static set themeMode(ThemeMode value) {
@@ -266,5 +280,11 @@ class Prefs {
 
   static set enableSound(bool value) {
     Prefs().sharedPreferences.setBool(_enableSoundVarName, value);
+  }
+
+  static set triggerMethod(TriggerMethod value) {
+    Prefs()
+        .sharedPreferences
+        .setString(_triggerMethodVarName, value.toString());
   }
 }
