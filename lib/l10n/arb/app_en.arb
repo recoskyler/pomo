@@ -99,5 +99,8 @@
 
     "madeBy1": "Made by ",
     "madeBy2": " - 2024",
-    "timer": "Timer"
+    "timer": "Timer",
+
+    "autoAdvanceDescription": "Automatically advance to the next lap after the current lap is over",
+    "webhooksDescription": "Send a webhook request when the timer state changes. You can trigger multiple webhooks for the same event if you separate the URLs with a comma (,)"
 }
