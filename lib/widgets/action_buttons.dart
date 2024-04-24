@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pomo/timer/cubit/timer_cubit.dart';
+import 'package:pomo/l10n/l10n.dart';
+import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
+import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
 
 class ActionButtons extends StatelessWidget {
   const ActionButtons({
@@ -9,12 +11,15 @@ class ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return BlocBuilder<TimerCubit, TimerState>(
       builder: (context, state) {
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton.filledTonal(
+              tooltip: l10n.reset,
               onPressed: state.status == TimerStatus.running
                   ? null
                   : () => context.read<TimerCubit>().reset(),
@@ -22,6 +27,9 @@ class ActionButtons extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             IconButton.filled(
+              tooltip: state.status == TimerStatus.stopped
+                  ? l10n.startTimer
+                  : l10n.pauseTimer,
               onPressed: () => context.read<TimerCubit>().toggle(),
               icon: Icon(
                 state.status == TimerStatus.running
@@ -30,10 +38,18 @@ class ActionButtons extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-            IconButton.filledTonal(
-              onPressed: () =>
-                  context.read<TimerCubit>().lap(autoAdvance: false),
-              icon: const Icon(Icons.skip_next),
+            BlocBuilder<SettingsCubit, SettingsState>(
+              builder: (context, settingsState) {
+                return IconButton.filledTonal(
+                  tooltip: l10n.skipLap,
+                  onPressed: () =>
+                      context.read<TimerCubit>().lap(
+                        autoAdvance: false,
+                        settingsState: settingsState,
+                      ),
+                  icon: const Icon(Icons.skip_next),
+                );
+              },
             ),
           ],
         );
