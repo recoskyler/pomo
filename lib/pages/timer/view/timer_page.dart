@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/web.dart';
+import 'package:pomo/helpers/hook_helper.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/timer.dart';
@@ -39,6 +41,116 @@ class TimerPage extends StatelessWidget {
                 }
 
                 player.play(AssetSource('sounds/ding_dong.aac'));
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous.lap != current.lap &&
+                  current.lap == TimerLap.work &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Work start web hook');
+                HookHelper.postWebHook(settingsState.workStartWebHook);
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous.lap != current.lap &&
+                  previous.lap == TimerLap.work &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Work end web hook');
+                HookHelper.postWebHook(settingsState.workEndWebHook);
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous.lap != current.lap &&
+                  current.lap == TimerLap.shortBreak &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Short break start web hook');
+                HookHelper.postWebHook(settingsState.shortBreakStartWebHook);
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous.lap != current.lap &&
+                  previous.lap == TimerLap.shortBreak &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Short break end web hook');
+                HookHelper.postWebHook(settingsState.shortBreakEndWebHook);
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous.lap != current.lap &&
+                  current.lap == TimerLap.longBreak &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Long break start web hook');
+                HookHelper.postWebHook(settingsState.longBreakStartWebHook);
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous.lap != current.lap &&
+                  previous.lap == TimerLap.longBreak &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Long break end web hook');
+                HookHelper.postWebHook(settingsState.longBreakEndWebHook);
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous.status != current.status &&
+                  current.status == TimerStatus.running &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Start timer web hook');
+                HookHelper.postWebHook(settingsState.startTimerWebHook);
+
+                switch (state.lap) {
+                  case TimerLap.work:
+                    HookHelper.postWebHook(settingsState.workStartWebHook);
+                  case TimerLap.shortBreak:
+                    HookHelper.postWebHook(
+                      settingsState.shortBreakStartWebHook,
+                    );
+                  case TimerLap.longBreak:
+                    HookHelper.postWebHook(settingsState.longBreakStartWebHook);
+                }
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous.status != current.status &&
+                  current.status == TimerStatus.stopped &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Stop timer web hook');
+                HookHelper.postWebHook(settingsState.stopTimerWebHook);
+
+                switch (state.lap) {
+                  case TimerLap.work:
+                    HookHelper.postWebHook(settingsState.workEndWebHook);
+                  case TimerLap.shortBreak:
+                    HookHelper.postWebHook(settingsState.shortBreakEndWebHook);
+                  case TimerLap.longBreak:
+                    HookHelper.postWebHook(settingsState.longBreakEndWebHook);
+                }
+              },
+            ),
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  previous != current &&
+                  current == const TimerState() &&
+                  settingsState.enableWebHooks,
+              listener: (context, state) {
+                Logger().i('Reset timer web hook');
+                HookHelper.postWebHook(settingsState.resetTimerWebHook);
               },
             ),
           ],
