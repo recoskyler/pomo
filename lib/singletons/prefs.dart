@@ -71,7 +71,7 @@ class Prefs {
   //* Var names
 
   static const String _themeModeVarName = 'pomo_theme_mode';
-  static const String _languageVarName = 'pomo_language';
+  static const String _localeVarName = 'pomo_locale';
   static const String _lapCountVarName = 'pomo_lap_count';
   static const String _autoAdvanceVarName = 'pomo_auto_advance';
   static const String _longBreakMinutesVarName = 'pomo_long_break_minutes';
@@ -92,6 +92,8 @@ class Prefs {
   static const String _stopTimerWebHookVarName = 'pomo_stop_timer_webhook';
   static const String _resetTimerWebHookVarName = 'pomo_reset_timer_webhook';
   static const String _alwaysOnTopVarName = 'pomo_always_on_top';
+  static const String _enableWebhooksVarName = 'pomo_enable_webhooks';
+  static const String _enableSoundVarName = 'pomo_enable_sound';
 
   //* Getters
 
@@ -108,10 +110,10 @@ class Prefs {
         ThemeMode.system;
   }
 
-  static Locale get language {
+  static Locale get locale {
     return Locale.fromSubtags(
       languageCode:
-          Prefs().sharedPreferences.getString(_languageVarName) ?? 'en',
+          Prefs().sharedPreferences.getString(_localeVarName) ?? 'en',
     );
   }
 
@@ -186,14 +188,22 @@ class Prefs {
     return Prefs().sharedPreferences.getBool(_alwaysOnTopVarName) ?? false;
   }
 
+  static bool get enableWebhooks {
+    return Prefs().sharedPreferences.getBool(_enableWebhooksVarName) ?? false;
+  }
+
+  static bool get enableSound {
+    return Prefs().sharedPreferences.getBool(_enableSoundVarName) ?? true;
+  }
+
   //* Setters
 
   static set themeMode(ThemeMode value) {
     Prefs().sharedPreferences.setString(_themeModeVarName, value.name);
   }
 
-  static set language(Locale value) {
-    Prefs().sharedPreferences.setString(_languageVarName, value.languageCode);
+  static set locale(Locale value) {
+    Prefs().sharedPreferences.setString(_localeVarName, value.languageCode);
   }
 
   static set longBreakMinutes(int value) {
@@ -258,5 +268,13 @@ class Prefs {
 
   static set alwaysOnTop(bool value) {
     Prefs().sharedPreferences.setBool(_alwaysOnTopVarName, value);
+  }
+
+  static set enableWebhooks(bool value) {
+    Prefs().sharedPreferences.setBool(_enableWebhooksVarName, value);
+  }
+
+  static set enableSound(bool value) {
+    Prefs().sharedPreferences.setBool(_enableSoundVarName, value);
   }
 }
