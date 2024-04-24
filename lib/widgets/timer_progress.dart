@@ -34,20 +34,32 @@ class TimerProgress extends StatelessWidget {
         builder: (context, settingsState) {
           return BlocBuilder<TimerCubit, TimerState>(
             builder: (context, state) {
-              return CircularProgressIndicator(
-                value: DurationHelper.getProgress(
-                  duration: state.duration,
-                  lap: state.lap,
-                  settingsState: settingsState,
+              final beginVal = DurationHelper.getProgress(
+                duration: state.duration - const Duration(seconds: 1),
+                lap: state.lap,
+                settingsState: settingsState,
+              );
+
+              final endVal = DurationHelper.getProgress(
+                duration: state.duration,
+                lap: state.lap,
+                settingsState: settingsState,
+              );
+
+              return TweenAnimationBuilder<double>(
+                tween: Tween(begin: beginVal, end: endVal),
+                duration: Durations.medium3,
+                builder: (context, value, _) => CircularProgressIndicator(
+                  value: value,
+                  color: _getProgressColor(
+                    lap: state.lap,
+                    status: state.status,
+                    context: context,
+                  ),
+                  strokeCap: StrokeCap.round,
+                  strokeAlign: BorderSide.strokeAlignInside,
+                  strokeWidth: MediaQuery.of(context).size.shortestSide * 0.025,
                 ),
-                color: _getProgressColor(
-                  lap: state.lap,
-                  status: state.status,
-                  context: context,
-                ),
-                strokeCap: StrokeCap.round,
-                strokeAlign: BorderSide.strokeAlignInside,
-                strokeWidth: MediaQuery.of(context).size.shortestSide * 0.025,
               );
             },
           );
