@@ -6,8 +6,9 @@
 
 A simple, cross-platform Pomodoro timer app with WebHook support.
 
-![https://github.com/recoskyler/pomo/blob/main/assets/images/screenshot_dark.png?raw=true]
-![https://github.com/recoskyler/pomo/blob/main/assets/images/screenshot_light.png?raw=true]
+![Dark Mode Screenshot](https://github.com/recoskyler/pomo/blob/main/assets/images/screenshot_dark.png?raw=true)
+
+![Light Mode Screenshot](https://github.com/recoskyler/pomo/blob/main/assets/images/screenshot_light.png?raw=true)
 
 ---
 
