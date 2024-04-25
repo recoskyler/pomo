@@ -150,6 +150,46 @@ flutter gen-l10n --arb-dir="lib/l10n/arb"
 
 Alternatively, run `flutter run` and code generation will take place automatically.
 
+## Building
+
+### Building for the web
+
+```bash
+$ flutter build web --release -o docs
+```
+
+### Building .APK
+
+Follow the steps [here](https://docs.flutter.dev/deployment/android). Make sure to create a keystore.
+
+```bash
+$ flutter build apk
+```
+
+### Building .DEB & .RPM (on Ubuntu 22.04)
+
+More info [here](https://docs.flutter.dev/deployment/linux) and [here](https://medium.com/@fluttergems/packaging-and-distributing-flutter-desktop-apps-the-missing-guide-part-3-linux-24ef8d30a5b4).
+
+#### Building .DEB
+
+```bash
+$ flutter_distributor release --name=dev --jobs=release-dev-linux-deb
+```
+
+#### Building .RPM
+
+```bash
+$ sudo apt-get install rpm patchelf
+
+$ flutter_distributor release --name=dev --jobs=release-dev-linux-rpm
+```
+
+### Building .EXE
+
+[*good luck*](https://medium.com/@fluttergems/packaging-and-distributing-flutter-desktop-apps-the-missing-guide-part-2-windows-0b468d5e9e70)
+
+[help](https://docs.flutter.dev/deployment/windows)
+
 ## About
 
 By [recoskyler](https://github.com/recoskyler) - 2024
