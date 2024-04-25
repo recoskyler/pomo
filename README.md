@@ -6,6 +6,9 @@
 
 A simple, cross-platform Pomodoro timer app with WebHook support.
 
+![https://github.com/recoskyler/pomo/blob/main/assets/images/screenshot_dark.png?raw=true]
+![https://github.com/recoskyler/pomo/blob/main/assets/images/screenshot_light.png?raw=true]
+
 ---
 
 ## Shortcuts
@@ -24,12 +27,12 @@ If you would like to trigger multiple WebHook URLs from a single event, you can 
 
 The main reason I created this application was to use these WebHooks to control my ambient light using HomeAssistant.
 
-## Tech Stack
+## Development
+
+### Tech Stack
 
 - Flutter 3.19.6
 - Dart 3.3.4
-
-## Getting Started 🚀
 
 This project contains 3 flavors:
 
@@ -149,6 +152,30 @@ flutter gen-l10n --arb-dir="lib/l10n/arb"
 ```
 
 Alternatively, run `flutter run` and code generation will take place automatically.
+
+## Building
+
+### Building .APK
+
+```bash
+$ flutter build apk
+```
+
+### Building .DEB
+
+```bash
+$ flutter_distributor release --name=dev --jobs=release-dev-linux-deb
+```
+
+### Building .RPM
+
+```bash
+$ flutter_distributor release --name=dev --jobs=release-dev-linux-rpm
+```
+
+### Building .EXE
+
+*good luck*
 
 ## About
 
