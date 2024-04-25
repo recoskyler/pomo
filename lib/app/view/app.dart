@@ -21,6 +21,9 @@ class App extends StatelessWidget {
         ),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(
+        buildWhen: (previous, current) =>
+            previous.themeMode != current.themeMode ||
+            previous.locale != current.locale,
         builder: (context, state) {
           return MaterialApp(
             theme: ThemeData(
