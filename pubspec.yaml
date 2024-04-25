@@ -1,6 +1,6 @@
 name: pomo
 description: A simple Pomodoro timer app
-version: 1.0.1+1
+version: 1.0.2+1
 publish_to: none
 
 environment:
@@ -38,6 +38,14 @@ flutter:
   generate: true
 
   fonts:
+    - family: Rubik Mono One
+      fonts:
+        - asset: fonts/RubikMonoOne-Regular.ttf
+
+    - family: Lilita One
+      fonts:
+        - asset: fonts/LilitaOne-Regular.ttf
+
     - family: Major Mono Display
       fonts:
         - asset: fonts/MajorMonoDisplay-Regular.ttf
@@ -52,3 +60,5 @@ flutter:
     - 'assets/images/pomo_logo_dark.png'
     - 'assets/images/pomo_splash.png'
     - 'fonts/MajorMonoDisplay-Regular.ttf'
+    - 'fonts/RubikMonoOne-Regular.ttf'
+    - 'fonts/LilitaOne-Regular.ttf'
