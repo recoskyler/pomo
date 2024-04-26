@@ -57,8 +57,6 @@ flutter:
     - 'assets/sounds/ding_dong.aac'
     - 'assets/images/pomo_logo.svg'
     - 'assets/images/pomo_logo.png'
-    - 'assets/images/pomo_logo_dark.svg'
-    - 'assets/images/pomo_logo_dark.png'
     - 'assets/images/pomo_splash.png'
     - 'fonts/MajorMonoDisplay-Regular.ttf'
     - 'fonts/RubikMonoOne-Regular.ttf'

@@ -32,9 +32,7 @@ class AboutPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
-                  Theme.of(context).brightness == Brightness.dark
-                      ? 'assets/images/pomo_logo.svg'
-                      : 'assets/images/pomo_logo_dark.svg',
+                  'assets/images/pomo_logo.svg',
                   width: MediaQuery.of(context).size.shortestSide * 0.4,
                 ),
                 const SizedBox(height: 16),
