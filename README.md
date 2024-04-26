@@ -12,13 +12,23 @@ A simple, cross-platform Pomodoro timer app with WebHook support.
 
 ---
 
-## Shortcuts
+## 🌟 Features
+
+- ⏱ Adjustable work, short break, and long break durations
+- 👏 Adjustable lap count
+- 🌐 Webhook integration
+- 🌛 Light/Dark theme
+- 🌈 Themes in a variety of colors
+- ⏰ Customizable timer font
+- 📢 Customizable sounds
+
+## ⌨ Keyboard Shortcuts
 
 - <kbd>Space</kbd> or <kbd>Enter</kbd> to start/pause the timer
 - <kbd>s</kbd> to skip the lap
 - <kbd>r</kbd> or <kbd>BackSpace</kbd> to reset the timer
 
-## Using WebHooks
+## 🌐 Using WebHooks
 
 You can configure WebHooks from the **Settings** page.
 
