@@ -52,6 +52,10 @@ class TimerPage extends StatelessWidget {
       return;
     }
 
+    if (status == TimerStatus.stopped && type != NotificationType.startStop) {
+      return;
+    }
+
     final player = AudioPlayer();
 
     try {

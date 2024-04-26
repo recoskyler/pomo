@@ -23,7 +23,7 @@ class SettingsView extends StatelessWidget {
         title: Text(l10n.settings),
         actions: [
           IconButton(
-            icon: const Icon(Icons.help),
+            icon: const Icon(Icons.info),
             tooltip: l10n.about,
             onPressed: () => Navigator.pushNamed(context, '/about'),
           ),
