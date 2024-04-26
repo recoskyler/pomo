@@ -92,9 +92,9 @@ class _CustomSoundField extends StatefulWidget {
     required this.onChanged,
     this.initialValue,
     this.title = 'Custom Sound',
+    // ignore: unused_element
     this.hintText = '/home/user/sounds/example.mp3',
     this.value = '',
-    super.key,
   });
 
   final String? initialValue;
@@ -173,7 +173,7 @@ class _CustomSoundFieldState extends State<_CustomSoundField> {
         TextFormField(
           controller: _controller,
           decoration: InputDecoration(
-            hintText: '/home/user/sounds/example.mp3',
+            hintText: widget.hintText,
             border: const OutlineInputBorder(),
             prefixIcon: StreamBuilder(
               stream: _player.onPlayerStateChanged,
