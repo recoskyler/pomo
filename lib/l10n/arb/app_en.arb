@@ -110,5 +110,7 @@
     "regular": "Regular",
     "mono": "Monospace",
     "boldMono": "Bold monospace",
-    "fancyMono": "Fancy monospace"
+    "fancyMono": "Fancy monospace",
+    "custom": "Custom",
+    "customFontName": "Custom font name"
 }

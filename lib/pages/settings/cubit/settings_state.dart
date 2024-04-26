@@ -22,6 +22,8 @@ class SettingsState extends Equatable {
     this.enableWebHooks = false,
     this.enableSound = true,
     this.triggerMethod = TriggerMethod.post,
+    this.timerFont = TimerFont.boldMono,
+    this.timerCustomFont = '',
   });
 
   final ThemeMode themeMode;
@@ -46,10 +48,12 @@ class SettingsState extends Equatable {
   final String startTimerWebHook;
   final String stopTimerWebHook;
   final String resetTimerWebHook;
+  final String timerCustomFont;
 
   final Locale locale;
 
   final TriggerMethod triggerMethod;
+  final TimerFont timerFont;
 
   SettingsState copyWith({
     ThemeMode Function()? themeMode,
@@ -72,6 +76,8 @@ class SettingsState extends Equatable {
     String Function()? resetTimerWebHook,
     Locale Function()? locale,
     TriggerMethod Function()? triggerMethod,
+    TimerFont Function()? timerFont,
+    String Function()? timerCustomFont,
   }) {
     return SettingsState(
       themeMode: themeMode != null ? themeMode() : this.themeMode,
@@ -114,6 +120,9 @@ class SettingsState extends Equatable {
       locale: locale != null ? locale() : this.locale,
       triggerMethod:
           triggerMethod != null ? triggerMethod() : this.triggerMethod,
+      timerFont: timerFont != null ? timerFont() : this.timerFont,
+      timerCustomFont:
+          timerCustomFont != null ? timerCustomFont() : this.timerCustomFont,
     );
   }
 
@@ -139,6 +148,8 @@ class SettingsState extends Equatable {
         resetTimerWebHook,
         locale,
         triggerMethod,
+        timerFont,
+        timerCustomFont,
       ];
 }
 

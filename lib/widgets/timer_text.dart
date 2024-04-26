@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/helpers/duration_helper.dart';
+import 'package:pomo/helpers/timer_helper.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
@@ -47,17 +48,19 @@ class TimerText extends StatelessWidget {
             const SizedBox(height: 8),
             BlocBuilder<SettingsCubit, SettingsState>(
               builder: (context, settingsState) {
-                return Text(
-                  DurationHelper.negativeFormat(
-                    duration: state.duration,
-                    lap: state.lap,
-                    settingsState: settingsState,
-                  ),
-                  style: Theme.of(context).textTheme.displayLarge,
+                final duration = DurationHelper.negativeFormat(
+                  duration: state.duration,
+                  lap: state.lap,
+                  settingsState: settingsState,
+                );
+
+                return TimerHelper.buildTimerText(
+                  duration: duration,
+                  settingsState: settingsState,
                 );
               },
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 8),
             const ActionButtons(),
           ],
         );

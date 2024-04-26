@@ -31,6 +31,8 @@ class SettingsCubit extends Cubit<SettingsState> {
         enableWebHooks: Prefs.enableWebhooks,
         enableSound: Prefs.enableSound,
         triggerMethod: Prefs.triggerMethod,
+        timerFont: Prefs.timerFont,
+        timerCustomFont: Prefs.timerCustomFont,
       ),
     );
   }
@@ -130,5 +132,13 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   void setTriggerMethod(TriggerMethod value) {
     emit(state.copyWith(triggerMethod: () => value));
+  }
+
+  void setTimerFont(TimerFont value) {
+    emit(state.copyWith(timerFont: () => value));
+  }
+
+  void setTimerCustomFont(String value) {
+    emit(state.copyWith(timerCustomFont: () => value));
   }
 }

@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pomo/helpers/hook_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+enum TimerFont {
+  mono,
+  fancyMono,
+  boldMono,
+  bold,
+  regular,
+  custom,
+}
+
 /// Singleton class for SharedPreferences
 class Prefs {
   /// Factory constructor
@@ -95,6 +104,8 @@ class Prefs {
   static const String _enableWebhooksVarName = 'pomo_enable_webhooks';
   static const String _enableSoundVarName = 'pomo_enable_sound';
   static const String _triggerMethodVarName = 'pomo_trigger_method';
+  static const String _timerFontVarName = 'pomo_timer_font';
+  static const String _timerCustomFontVarName = 'pomo_timer_custom_font';
 
   //* Getters
 
@@ -109,6 +120,18 @@ class Prefs {
             )
             .firstOrNull ??
         ThemeMode.system;
+  }
+
+  static TimerFont get timerFont {
+    return TimerFont.values
+            .where(
+              (e) =>
+                  e.name ==
+                  (Prefs().sharedPreferences.getString(_timerFontVarName) ??
+                      'TimerFont.boldMono'),
+            )
+            .firstOrNull ??
+        TimerFont.boldMono;
   }
 
   static Locale get locale {
@@ -204,6 +227,10 @@ class Prefs {
         TriggerMethod.post;
   }
 
+  static String get timerCustomFont {
+    return Prefs().sharedPreferences.getString(_timerCustomFontVarName) ?? '';
+  }
+
   //* Setters
 
   static set themeMode(ThemeMode value) {
@@ -286,5 +313,13 @@ class Prefs {
     Prefs()
         .sharedPreferences
         .setString(_triggerMethodVarName, value.toString());
+  }
+
+  static set timerFont(TimerFont value) {
+    Prefs().sharedPreferences.setString(_timerFontVarName, value.name);
+  }
+
+  static set timerCustomFont(String value) {
+    Prefs().sharedPreferences.setString(_timerCustomFontVarName, value);
   }
 }
