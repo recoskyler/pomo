@@ -10,6 +10,8 @@ A simple, cross-platform Pomodoro timer app with WebHook support.
 
 ![Light Mode Screenshot](https://github.com/recoskyler/pomo/blob/main/assets/images/screenshot_light.png?raw=true)
 
+![Settings Page Screenshot](https://github.com/recoskyler/pomo/blob/main/assets/images/settings.png?raw=true)
+
 ---
 
 ## 🌟 Features
@@ -37,6 +39,10 @@ If you would like to trigger multiple WebHook URLs from a single event, you can 
 `https://example.com/api/v1/webhooks/start,https://example2.com/api/v1/webhooks/toggle`
 
 The main reason I created this application was to use these WebHooks to control my ambient light using HomeAssistant.
+
+## Installing
+
+You can either download and install one of the already-built [releases](https://github.com/recoskyler/pomo/releases), or [build it yourself](#building).
 
 ## Development
 

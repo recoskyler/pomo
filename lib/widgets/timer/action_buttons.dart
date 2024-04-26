@@ -104,7 +104,7 @@ class _ActionButtonsState extends State<ActionButtons>
                   return IconButton.filledTonal(
                     tooltip: l10n.skipLap,
                     onPressed: () => context.read<TimerCubit>().lap(
-                          autoAdvance: false,
+                          autoAdvance: state.status == TimerStatus.running,
                           settingsState: settingsState,
                         ),
                     icon: const Icon(Icons.skip_next),
