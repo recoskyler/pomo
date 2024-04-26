@@ -33,6 +33,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         triggerMethod: Prefs.triggerMethod,
         timerFont: Prefs.timerFont,
         timerCustomFont: Prefs.timerCustomFont,
+        colorSeed: Prefs.colorSeed,
       ),
     );
   }
@@ -127,18 +128,27 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   // ignore: avoid_positional_boolean_parameters
   void toggleSound() {
+    Prefs.enableSound = !state.enableSound;
     emit(state.copyWith(enableSound: () => !state.enableSound));
   }
 
   void setTriggerMethod(TriggerMethod value) {
+    Prefs.triggerMethod = value;
     emit(state.copyWith(triggerMethod: () => value));
   }
 
   void setTimerFont(TimerFont value) {
+    Prefs.timerFont = value;
     emit(state.copyWith(timerFont: () => value));
   }
 
   void setTimerCustomFont(String value) {
+    Prefs.timerCustomFont = value;
     emit(state.copyWith(timerCustomFont: () => value));
+  }
+
+  void setColorSeed(Color? value) {
+    Prefs.colorSeed = value;
+    emit(state.copyWith(colorSeed: () => value));
   }
 }

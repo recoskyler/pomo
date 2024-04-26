@@ -23,20 +23,21 @@ class App extends StatelessWidget {
       child: BlocBuilder<SettingsCubit, SettingsState>(
         buildWhen: (previous, current) =>
             previous.themeMode != current.themeMode ||
+            previous.colorSeed != current.colorSeed ||
             previous.locale != current.locale,
         builder: (context, state) {
           return MaterialApp(
             theme: ThemeData(
               useMaterial3: true,
               colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.redAccent,
+                seedColor: state.colorSeed ?? Colors.redAccent,
               ),
               appBarTheme: const AppBarTheme(centerTitle: true),
             ),
             darkTheme: ThemeData(
               useMaterial3: true,
               colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.redAccent,
+                seedColor: state.colorSeed ?? Colors.redAccent,
                 brightness: Brightness.dark,
               ),
               appBarTheme: const AppBarTheme(centerTitle: true),

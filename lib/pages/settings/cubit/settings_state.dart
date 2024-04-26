@@ -24,6 +24,7 @@ class SettingsState extends Equatable {
     this.triggerMethod = TriggerMethod.post,
     this.timerFont = TimerFont.boldMono,
     this.timerCustomFont = '',
+    this.colorSeed,
   });
 
   final ThemeMode themeMode;
@@ -55,6 +56,8 @@ class SettingsState extends Equatable {
   final TriggerMethod triggerMethod;
   final TimerFont timerFont;
 
+  final Color? colorSeed;
+
   SettingsState copyWith({
     ThemeMode Function()? themeMode,
     bool Function()? alwaysOnTop,
@@ -78,6 +81,7 @@ class SettingsState extends Equatable {
     TriggerMethod Function()? triggerMethod,
     TimerFont Function()? timerFont,
     String Function()? timerCustomFont,
+    Color? Function()? colorSeed,
   }) {
     return SettingsState(
       themeMode: themeMode != null ? themeMode() : this.themeMode,
@@ -123,11 +127,12 @@ class SettingsState extends Equatable {
       timerFont: timerFont != null ? timerFont() : this.timerFont,
       timerCustomFont:
           timerCustomFont != null ? timerCustomFont() : this.timerCustomFont,
+      colorSeed: colorSeed != null ? colorSeed() : this.colorSeed,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         themeMode,
         alwaysOnTop,
         autoAdvance,
@@ -150,6 +155,7 @@ class SettingsState extends Equatable {
         triggerMethod,
         timerFont,
         timerCustomFont,
+        colorSeed,
       ];
 }
 

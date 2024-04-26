@@ -106,6 +106,7 @@ class Prefs {
   static const String _triggerMethodVarName = 'pomo_trigger_method';
   static const String _timerFontVarName = 'pomo_timer_font';
   static const String _timerCustomFontVarName = 'pomo_timer_custom_font';
+  static const String _colorSeedVarName = 'pomo_color_seed';
 
   //* Getters
 
@@ -136,8 +137,7 @@ class Prefs {
 
   static Locale get locale {
     return Locale.fromSubtags(
-      languageCode:
-          Prefs().sharedPreferences.getString(_localeVarName) ?? 'en',
+      languageCode: Prefs().sharedPreferences.getString(_localeVarName) ?? 'en',
     );
   }
 
@@ -231,6 +231,12 @@ class Prefs {
     return Prefs().sharedPreferences.getString(_timerCustomFontVarName) ?? '';
   }
 
+  static Color? get colorSeed {
+    final val = Prefs().sharedPreferences.getInt(_colorSeedVarName);
+
+    return val != null ? Color(val) : null;
+  }
+
   //* Setters
 
   static set themeMode(ThemeMode value) {
@@ -321,5 +327,14 @@ class Prefs {
 
   static set timerCustomFont(String value) {
     Prefs().sharedPreferences.setString(_timerCustomFontVarName, value);
+  }
+
+  static set colorSeed(Color? value) {
+    if (value == null) {
+      Prefs().sharedPreferences.remove(_colorSeedVarName);
+      return;
+    }
+
+    Prefs().sharedPreferences.setInt(_colorSeedVarName, value.value);
   }
 }
