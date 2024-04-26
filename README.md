@@ -12,13 +12,23 @@ A simple, cross-platform Pomodoro timer app with WebHook support.
 
 ---
 
-## Shortcuts
+## 🌟 Features
+
+- ⏱ Adjustable work, short break, and long break durations
+- 👏 Adjustable lap count
+- 🌐 Webhook integration
+- 🌛 Light/Dark theme
+- 🌈 Themes in a variety of colors
+- ⏰ Customizable timer font
+- 📢 Customizable sounds
+
+## ⌨ Keyboard Shortcuts
 
 - <kbd>Space</kbd> or <kbd>Enter</kbd> to start/pause the timer
 - <kbd>s</kbd> to skip the lap
 - <kbd>r</kbd> or <kbd>BackSpace</kbd> to reset the timer
 
-## Using WebHooks
+## 🌐 Using WebHooks
 
 You can configure WebHooks from the **Settings** page.
 
@@ -156,27 +166,43 @@ Alternatively, run `flutter run` and code generation will take place automatical
 
 ## Building
 
+### Building for the web
+
+```bash
+$ flutter build web --release -o docs
+```
+
 ### Building .APK
+
+Follow the steps [here](https://docs.flutter.dev/deployment/android). Make sure to create a keystore.
 
 ```bash
 $ flutter build apk
 ```
 
-### Building .DEB
+### Building .DEB & .RPM (on Ubuntu 22.04)
+
+More info [here](https://docs.flutter.dev/deployment/linux) and [here](https://medium.com/@fluttergems/packaging-and-distributing-flutter-desktop-apps-the-missing-guide-part-3-linux-24ef8d30a5b4).
+
+#### Building .DEB
 
 ```bash
 $ flutter_distributor release --name=dev --jobs=release-dev-linux-deb
 ```
 
-### Building .RPM
+#### Building .RPM
 
 ```bash
+$ sudo apt-get install rpm patchelf
+
 $ flutter_distributor release --name=dev --jobs=release-dev-linux-rpm
 ```
 
 ### Building .EXE
 
-*good luck*
+[*good luck*](https://medium.com/@fluttergems/packaging-and-distributing-flutter-desktop-apps-the-missing-guide-part-2-windows-0b468d5e9e70)
+
+[help](https://docs.flutter.dev/deployment/windows)
 
 ## About
 

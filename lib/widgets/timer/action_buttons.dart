@@ -40,15 +40,30 @@ class _ActionButtonsState extends State<ActionButtons>
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return BlocListener<TimerCubit, TimerState>(
-      listenWhen: (previous, current) => previous.status != current.status,
-      listener: (context, state) {
-        if (state.status == TimerStatus.running) {
-          controller.forward();
-        } else {
-          controller.reverse();
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<TimerCubit, TimerState>(
+          listenWhen: (previous, current) => previous.status != current.status,
+          listener: (context, state) {
+            if (state.status == TimerStatus.running) {
+              controller.forward();
+            } else {
+              controller.reverse();
+            }
+          },
+        ),
+        BlocListener<TimerCubit, TimerState>(
+          listenWhen: (previous, current) =>
+              previous.duration != current.duration && !controller.isAnimating,
+          listener: (context, state) {
+            if (state.status == TimerStatus.running && controller.value < 1) {
+              controller.reverse();
+            } else if (controller.value > 0) {
+              controller.forward();
+            }
+          },
+        ),
+      ],
       child: BlocBuilder<TimerCubit, TimerState>(
         builder: (context, state) {
           return Row(

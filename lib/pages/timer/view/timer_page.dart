@@ -9,16 +9,81 @@ import 'package:pomo/helpers/hook_helper.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/timer.dart';
-import 'package:pomo/widgets/timer_progress.dart';
-import 'package:pomo/widgets/timer_text.dart';
+import 'package:pomo/widgets/timer/timer_progress.dart';
+import 'package:pomo/widgets/timer/timer_text.dart';
+
+enum NotificationType {
+  workStart,
+  workEnd,
+  shortBreakStart,
+  shortBreakEnd,
+  longBreakStart,
+  longBreakEnd,
+  startStop,
+}
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
+  Future<void> _notify(
+    NotificationType type,
+    SettingsState settingsState,
+    TimerStatus status,
+  ) async {
+    if (!settingsState.enableSound) {
+      return;
+    }
+
+    if ([
+          NotificationType.workEnd,
+          NotificationType.shortBreakEnd,
+          NotificationType.longBreakEnd,
+        ].contains(type) &&
+        status == TimerStatus.running) {
+      return;
+    }
+
+    if ([
+          NotificationType.workStart,
+          NotificationType.shortBreakStart,
+          NotificationType.longBreakStart,
+        ].contains(type) &&
+        status == TimerStatus.stopped) {
+      return;
+    }
+
     final player = AudioPlayer();
 
+    try {
+      switch (type) {
+        case NotificationType.workStart:
+          await player
+              .play(DeviceFileSource(settingsState.customWorkStartSound));
+        case NotificationType.workEnd:
+          await player.play(DeviceFileSource(settingsState.customWorkEndSound));
+        case NotificationType.shortBreakStart:
+          await player
+              .play(DeviceFileSource(settingsState.customShortBreakStartSound));
+        case NotificationType.shortBreakEnd:
+          await player
+              .play(DeviceFileSource(settingsState.customShortBreakEndSound));
+        case NotificationType.longBreakStart:
+          await player
+              .play(DeviceFileSource(settingsState.customLongBreakStartSound));
+        case NotificationType.longBreakEnd:
+          await player
+              .play(DeviceFileSource(settingsState.customLongBreakEndSound));
+        case NotificationType.startStop:
+          await player.play(AssetSource('sounds/pop.aac'));
+      }
+    } catch (e) {
+      await player.stop();
+      await player.play(AssetSource('sounds/ding_dong.aac'));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, settingsState) {
         return MultiBlocListener(
@@ -27,23 +92,15 @@ class TimerPage extends StatelessWidget {
               listenWhen: (previous, current) =>
                   previous.status != current.status,
               listener: (context, state) {
-                if (!settingsState.enableSound) {
-                  return;
-                }
-
-                player.play(AssetSource('sounds/pop.aac'));
+                Logger().i('Start/Stop');
+                _notify(
+                  NotificationType.startStop,
+                  settingsState,
+                  state.status,
+                );
               },
             ),
-            BlocListener<TimerCubit, TimerState>(
-              listenWhen: (previous, current) => previous.lap != current.lap,
-              listener: (context, state) {
-                if (!settingsState.enableSound) {
-                  return;
-                }
-
-                player.play(AssetSource('sounds/ding_dong.aac'));
-              },
-            ),
+            // WORK START
             BlocListener<TimerCubit, TimerState>(
               listenWhen: (previous, current) =>
                   previous.lap != current.lap &&
@@ -51,9 +108,15 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Work start web hook');
+                _notify(
+                  NotificationType.workStart,
+                  settingsState,
+                  state.status,
+                );
                 HookHelper.postWebHook(settingsState.workStartWebHook);
               },
             ),
+            // WORK END
             BlocListener<TimerCubit, TimerState>(
               listenWhen: (previous, current) =>
                   previous.lap != current.lap &&
@@ -61,9 +124,15 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Work end web hook');
+                _notify(
+                  NotificationType.workEnd,
+                  settingsState,
+                  state.status,
+                );
                 HookHelper.postWebHook(settingsState.workEndWebHook);
               },
             ),
+            // SHORT BREAK START
             BlocListener<TimerCubit, TimerState>(
               listenWhen: (previous, current) =>
                   previous.lap != current.lap &&
@@ -71,9 +140,15 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Short break start web hook');
+                _notify(
+                  NotificationType.shortBreakStart,
+                  settingsState,
+                  state.status,
+                );
                 HookHelper.postWebHook(settingsState.shortBreakStartWebHook);
               },
             ),
+            // SHORT BREAK END
             BlocListener<TimerCubit, TimerState>(
               listenWhen: (previous, current) =>
                   previous.lap != current.lap &&
@@ -81,9 +156,15 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Short break end web hook');
+                _notify(
+                  NotificationType.shortBreakEnd,
+                  settingsState,
+                  state.status,
+                );
                 HookHelper.postWebHook(settingsState.shortBreakEndWebHook);
               },
             ),
+            // LONG BREAK START
             BlocListener<TimerCubit, TimerState>(
               listenWhen: (previous, current) =>
                   previous.lap != current.lap &&
@@ -91,9 +172,15 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Long break start web hook');
+                _notify(
+                  NotificationType.longBreakStart,
+                  settingsState,
+                  state.status,
+                );
                 HookHelper.postWebHook(settingsState.longBreakStartWebHook);
               },
             ),
+            // LONG BREAK END
             BlocListener<TimerCubit, TimerState>(
               listenWhen: (previous, current) =>
                   previous.lap != current.lap &&
@@ -101,6 +188,11 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Long break end web hook');
+                _notify(
+                  NotificationType.longBreakEnd,
+                  settingsState,
+                  state.status,
+                );
                 HookHelper.postWebHook(settingsState.longBreakEndWebHook);
               },
             ),

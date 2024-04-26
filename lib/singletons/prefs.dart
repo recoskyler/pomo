@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pomo/helpers/hook_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+enum TimerFont {
+  mono,
+  fancyMono,
+  boldMono,
+  bold,
+  regular,
+  custom,
+}
+
 /// Singleton class for SharedPreferences
 class Prefs {
   /// Factory constructor
@@ -95,6 +104,20 @@ class Prefs {
   static const String _enableWebhooksVarName = 'pomo_enable_webhooks';
   static const String _enableSoundVarName = 'pomo_enable_sound';
   static const String _triggerMethodVarName = 'pomo_trigger_method';
+  static const String _timerFontVarName = 'pomo_timer_font';
+  static const String _timerCustomFontVarName = 'pomo_timer_custom_font';
+  static const String _colorSeedVarName = 'pomo_color_seed';
+  static const String _customShortBreakStartSoundVarName =
+      'pomo_custom_short_break_start_sound';
+  static const String _customLongBreakStartSoundVarName =
+      'pomo_custom_long_break_start_sound';
+  static const String _customWorkStartSoundVarName =
+      'pomo_custom_work_start_sound';
+  static const String _customShortBreakEndSoundVarName =
+      'pomo_custom_short_break_end_sound';
+  static const String _customLongBreakEndSoundVarName =
+      'pomo_custom_long_break_end_sound';
+  static const String _customWorkEndSoundVarName = 'pomo_custom_work_end_sound';
 
   //* Getters
 
@@ -111,10 +134,21 @@ class Prefs {
         ThemeMode.system;
   }
 
+  static TimerFont get timerFont {
+    return TimerFont.values
+            .where(
+              (e) =>
+                  e.name ==
+                  (Prefs().sharedPreferences.getString(_timerFontVarName) ??
+                      'TimerFont.boldMono'),
+            )
+            .firstOrNull ??
+        TimerFont.boldMono;
+  }
+
   static Locale get locale {
     return Locale.fromSubtags(
-      languageCode:
-          Prefs().sharedPreferences.getString(_localeVarName) ?? 'en',
+      languageCode: Prefs().sharedPreferences.getString(_localeVarName) ?? 'en',
     );
   }
 
@@ -204,6 +238,54 @@ class Prefs {
         TriggerMethod.post;
   }
 
+  static String get timerCustomFont {
+    return Prefs().sharedPreferences.getString(_timerCustomFontVarName) ?? '';
+  }
+
+  static Color? get colorSeed {
+    final val = Prefs().sharedPreferences.getInt(_colorSeedVarName);
+
+    return val != null ? Color(val) : null;
+  }
+
+  static String get customShortBreakStartSound {
+    return Prefs()
+            .sharedPreferences
+            .getString(_customShortBreakStartSoundVarName) ??
+        '';
+  }
+
+  static String get customLongBreakStartSound {
+    return Prefs()
+            .sharedPreferences
+            .getString(_customLongBreakStartSoundVarName) ??
+        '';
+  }
+
+  static String get customWorkStartSound {
+    return Prefs().sharedPreferences.getString(_customWorkStartSoundVarName) ??
+        '';
+  }
+
+  static String get customShortBreakEndSound {
+    return Prefs()
+            .sharedPreferences
+            .getString(_customShortBreakEndSoundVarName) ??
+        '';
+  }
+
+  static String get customLongBreakEndSound {
+    return Prefs()
+            .sharedPreferences
+            .getString(_customLongBreakEndSoundVarName) ??
+        '';
+  }
+
+  static String get customWorkEndSound {
+    return Prefs().sharedPreferences.getString(_customWorkEndSoundVarName) ??
+        '';
+  }
+
   //* Setters
 
   static set themeMode(ThemeMode value) {
@@ -286,5 +368,52 @@ class Prefs {
     Prefs()
         .sharedPreferences
         .setString(_triggerMethodVarName, value.toString());
+  }
+
+  static set timerFont(TimerFont value) {
+    Prefs().sharedPreferences.setString(_timerFontVarName, value.name);
+  }
+
+  static set timerCustomFont(String value) {
+    Prefs().sharedPreferences.setString(_timerCustomFontVarName, value);
+  }
+
+  static set colorSeed(Color? value) {
+    if (value == null) {
+      Prefs().sharedPreferences.remove(_colorSeedVarName);
+      return;
+    }
+
+    Prefs().sharedPreferences.setInt(_colorSeedVarName, value.value);
+  }
+
+  static set customShortBreakStartSound(String value) {
+    Prefs()
+        .sharedPreferences
+        .setString(_customShortBreakStartSoundVarName, value);
+  }
+
+  static set customLongBreakStartSound(String value) {
+    Prefs()
+        .sharedPreferences
+        .setString(_customLongBreakStartSoundVarName, value);
+  }
+
+  static set customWorkStartSound(String value) {
+    Prefs().sharedPreferences.setString(_customWorkStartSoundVarName, value);
+  }
+
+  static set customShortBreakEndSound(String value) {
+    Prefs()
+        .sharedPreferences
+        .setString(_customShortBreakEndSoundVarName, value);
+  }
+
+  static set customLongBreakEndSound(String value) {
+    Prefs().sharedPreferences.setString(_customLongBreakEndSoundVarName, value);
+  }
+
+  static set customWorkEndSound(String value) {
+    Prefs().sharedPreferences.setString(_customWorkEndSoundVarName, value);
   }
 }

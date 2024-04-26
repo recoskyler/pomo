@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/helpers/duration_helper.dart';
+import 'package:pomo/helpers/lap_helper.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
 
@@ -48,18 +49,38 @@ class TimerProgress extends StatelessWidget {
 
               return TweenAnimationBuilder<double>(
                 tween: Tween(begin: beginVal, end: endVal),
+                curve: Curves.easeOut,
                 duration: Durations.medium3,
-                builder: (context, value, _) => CircularProgressIndicator(
-                  value: value,
-                  color: _getProgressColor(
-                    lap: state.lap,
-                    status: state.status,
-                    context: context,
-                  ),
-                  strokeCap: StrokeCap.round,
-                  strokeAlign: BorderSide.strokeAlignInside,
-                  strokeWidth: MediaQuery.of(context).size.shortestSide * 0.025,
-                ),
+                builder: (context, value, _) {
+                  final nextLap = LapHelper.getNextLap(
+                    state.lap,
+                    state.lapNumber,
+                    settingsState.lapCount,
+                  );
+
+                  final color = Color.lerp(
+                    _getProgressColor(
+                      lap: nextLap,
+                      status: state.status,
+                      context: context,
+                    ),
+                    _getProgressColor(
+                      lap: state.lap,
+                      status: state.status,
+                      context: context,
+                    ),
+                    value,
+                  );
+
+                  return CircularProgressIndicator(
+                    value: value,
+                    color: color,
+                    strokeCap: StrokeCap.round,
+                    strokeAlign: BorderSide.strokeAlignInside,
+                    strokeWidth:
+                        MediaQuery.of(context).size.shortestSide * 0.05,
+                  );
+                },
               );
             },
           );

@@ -22,6 +22,15 @@ class SettingsState extends Equatable {
     this.enableWebHooks = false,
     this.enableSound = true,
     this.triggerMethod = TriggerMethod.post,
+    this.timerFont = TimerFont.boldMono,
+    this.timerCustomFont = '',
+    this.colorSeed,
+    this.customWorkStartSound = '',
+    this.customWorkEndSound = '',
+    this.customShortBreakStartSound = '',
+    this.customShortBreakEndSound = '',
+    this.customLongBreakStartSound = '',
+    this.customLongBreakEndSound = '',
   });
 
   final ThemeMode themeMode;
@@ -47,9 +56,21 @@ class SettingsState extends Equatable {
   final String stopTimerWebHook;
   final String resetTimerWebHook;
 
+  final String timerCustomFont;
+
+  final String customWorkStartSound;
+  final String customWorkEndSound;
+  final String customShortBreakStartSound;
+  final String customShortBreakEndSound;
+  final String customLongBreakStartSound;
+  final String customLongBreakEndSound;
+
   final Locale locale;
 
   final TriggerMethod triggerMethod;
+  final TimerFont timerFont;
+
+  final Color? colorSeed;
 
   SettingsState copyWith({
     ThemeMode Function()? themeMode,
@@ -72,6 +93,15 @@ class SettingsState extends Equatable {
     String Function()? resetTimerWebHook,
     Locale Function()? locale,
     TriggerMethod Function()? triggerMethod,
+    TimerFont Function()? timerFont,
+    String Function()? timerCustomFont,
+    Color? Function()? colorSeed,
+    String Function()? customWorkStartSound,
+    String Function()? customWorkEndSound,
+    String Function()? customShortBreakStartSound,
+    String Function()? customShortBreakEndSound,
+    String Function()? customLongBreakStartSound,
+    String Function()? customLongBreakEndSound,
   }) {
     return SettingsState(
       themeMode: themeMode != null ? themeMode() : this.themeMode,
@@ -114,11 +144,33 @@ class SettingsState extends Equatable {
       locale: locale != null ? locale() : this.locale,
       triggerMethod:
           triggerMethod != null ? triggerMethod() : this.triggerMethod,
+      timerFont: timerFont != null ? timerFont() : this.timerFont,
+      timerCustomFont:
+          timerCustomFont != null ? timerCustomFont() : this.timerCustomFont,
+      colorSeed: colorSeed != null ? colorSeed() : this.colorSeed,
+      customWorkStartSound: customWorkStartSound != null
+          ? customWorkStartSound()
+          : this.customWorkStartSound,
+      customWorkEndSound: customWorkEndSound != null
+          ? customWorkEndSound()
+          : this.customWorkEndSound,
+      customShortBreakStartSound: customShortBreakStartSound != null
+          ? customShortBreakStartSound()
+          : this.customShortBreakStartSound,
+      customShortBreakEndSound: customShortBreakEndSound != null
+          ? customShortBreakEndSound()
+          : this.customShortBreakEndSound,
+      customLongBreakStartSound: customLongBreakStartSound != null
+          ? customLongBreakStartSound()
+          : this.customLongBreakStartSound,
+      customLongBreakEndSound: customLongBreakEndSound != null
+          ? customLongBreakEndSound()
+          : this.customLongBreakEndSound,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         themeMode,
         alwaysOnTop,
         autoAdvance,
@@ -139,6 +191,15 @@ class SettingsState extends Equatable {
         resetTimerWebHook,
         locale,
         triggerMethod,
+        timerFont,
+        timerCustomFont,
+        colorSeed,
+        customWorkStartSound,
+        customWorkEndSound,
+        customShortBreakStartSound,
+        customShortBreakEndSound,
+        customLongBreakStartSound,
+        customLongBreakEndSound,
       ];
 }
 

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pomo/helpers/duration_helper.dart';
+import 'package:pomo/helpers/lap_helper.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 
 part 'timer_state.dart';
@@ -25,27 +26,14 @@ class TimerCubit extends Cubit<TimerState> {
       state.copyWith(
         duration: () => Duration.zero,
         lapNumber: () => (state.lapNumber + 1) % (settingsState.lapCount * 2),
-        lap: () {
-          if (state.lapNumber == 0) {
-            return TimerLap.shortBreak;
-          } else if (state.lapNumber == (settingsState.lapCount * 2) - 2) {
-            return TimerLap.longBreak;
-          } else if (state.lapNumber.isOdd &&
-              state.lapNumber < ((settingsState.lapCount * 2) - 1)) {
-            return TimerLap.work;
-          } else if (state.lapNumber.isEven &&
-              state.lapNumber < ((settingsState.lapCount * 2) - 1)) {
-            return TimerLap.shortBreak;
-          } else {
-            return TimerLap.work;
-          }
-        },
+        lap: () => LapHelper.getNextLap(
+          state.lap,
+          state.lapNumber,
+          settingsState.lapCount,
+        ),
+        status: !autoAdvance ? () => TimerStatus.stopped : null,
       ),
     );
-
-    if (!autoAdvance) {
-      stop();
-    }
   }
 
   /// Adds the given [duration] to the current [TimerState.duration].
