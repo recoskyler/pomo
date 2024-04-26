@@ -51,7 +51,7 @@
         }
     },
 
-    "lapCount": "Lap count ({count} laps)",
+    "lapCount": "Lap count ({count} work laps)",
     "@lapCount": {
         "placeholders": {
             "count": {
@@ -102,5 +102,13 @@
     "timer": "Timer",
 
     "autoAdvanceDescription": "Automatically advance to the next lap after the current lap is over",
-    "webhooksDescription": "Send a webhook request when the timer state changes. You can trigger multiple webhooks for the same event if you separate the URLs with a comma (,)"
+    "webhooksDescription": "Send a webhook request when the timer state changes. You can trigger multiple webhooks for the same event if you separate the URLs with a comma (,)",
+
+    "timerFont": "Timer font",
+
+    "bold": "Bold",
+    "regular": "Regular",
+    "mono": "Monospace",
+    "boldMono": "Bold monospace",
+    "fancyMono": "Fancy monospace"
 }
