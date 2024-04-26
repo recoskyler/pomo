@@ -170,6 +170,22 @@ flutter gen-l10n --arb-dir="lib/l10n/arb"
 
 Alternatively, run `flutter run` and code generation will take place automatically.
 
+### Generating Splash Screens
+
+To use the latest splash screen changes, you will need to generate them:
+
+```sh
+dart run flutter_native_splash:create
+```
+
+### Generating Launcher Icons
+
+To use the latest launcher icon (`<project root>/assets/images/pomo_logo.png`) changes, you will need to generate them:
+
+```sh
+dart run flutter_launcher_icons
+```
+
 ## Building
 
 ### Building for the web

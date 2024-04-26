@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Pomo
+Comment=A free, simple, open-source, cross-platform Pomodoro timer app with WebHook support.
+Exec=pomo
+Icon=${SNAP}/meta/gui/pomo.png
+Terminal=false
+Type=Application
+Categories=Productivity;
