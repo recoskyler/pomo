@@ -25,6 +25,12 @@ class SettingsState extends Equatable {
     this.timerFont = TimerFont.boldMono,
     this.timerCustomFont = '',
     this.colorSeed,
+    this.customWorkStartSound = '',
+    this.customWorkEndSound = '',
+    this.customShortBreakStartSound = '',
+    this.customShortBreakEndSound = '',
+    this.customLongBreakStartSound = '',
+    this.customLongBreakEndSound = '',
   });
 
   final ThemeMode themeMode;
@@ -49,7 +55,15 @@ class SettingsState extends Equatable {
   final String startTimerWebHook;
   final String stopTimerWebHook;
   final String resetTimerWebHook;
+
   final String timerCustomFont;
+
+  final String customWorkStartSound;
+  final String customWorkEndSound;
+  final String customShortBreakStartSound;
+  final String customShortBreakEndSound;
+  final String customLongBreakStartSound;
+  final String customLongBreakEndSound;
 
   final Locale locale;
 
@@ -82,6 +96,12 @@ class SettingsState extends Equatable {
     TimerFont Function()? timerFont,
     String Function()? timerCustomFont,
     Color? Function()? colorSeed,
+    String Function()? customWorkStartSound,
+    String Function()? customWorkEndSound,
+    String Function()? customShortBreakStartSound,
+    String Function()? customShortBreakEndSound,
+    String Function()? customLongBreakStartSound,
+    String Function()? customLongBreakEndSound,
   }) {
     return SettingsState(
       themeMode: themeMode != null ? themeMode() : this.themeMode,
@@ -128,6 +148,24 @@ class SettingsState extends Equatable {
       timerCustomFont:
           timerCustomFont != null ? timerCustomFont() : this.timerCustomFont,
       colorSeed: colorSeed != null ? colorSeed() : this.colorSeed,
+      customWorkStartSound: customWorkStartSound != null
+          ? customWorkStartSound()
+          : this.customWorkStartSound,
+      customWorkEndSound: customWorkEndSound != null
+          ? customWorkEndSound()
+          : this.customWorkEndSound,
+      customShortBreakStartSound: customShortBreakStartSound != null
+          ? customShortBreakStartSound()
+          : this.customShortBreakStartSound,
+      customShortBreakEndSound: customShortBreakEndSound != null
+          ? customShortBreakEndSound()
+          : this.customShortBreakEndSound,
+      customLongBreakStartSound: customLongBreakStartSound != null
+          ? customLongBreakStartSound()
+          : this.customLongBreakStartSound,
+      customLongBreakEndSound: customLongBreakEndSound != null
+          ? customLongBreakEndSound()
+          : this.customLongBreakEndSound,
     );
   }
 
@@ -156,6 +194,12 @@ class SettingsState extends Equatable {
         timerFont,
         timerCustomFont,
         colorSeed,
+        customWorkStartSound,
+        customWorkEndSound,
+        customShortBreakStartSound,
+        customShortBreakEndSound,
+        customLongBreakStartSound,
+        customLongBreakEndSound,
       ];
 }
 

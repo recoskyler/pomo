@@ -31,12 +31,9 @@ class TimerCubit extends Cubit<TimerState> {
           state.lapNumber,
           settingsState.lapCount,
         ),
+        status: !autoAdvance ? () => TimerStatus.stopped : null,
       ),
     );
-
-    if (!autoAdvance) {
-      stop();
-    }
   }
 
   /// Adds the given [duration] to the current [TimerState.duration].

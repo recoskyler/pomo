@@ -34,6 +34,12 @@ class SettingsCubit extends Cubit<SettingsState> {
         timerFont: Prefs.timerFont,
         timerCustomFont: Prefs.timerCustomFont,
         colorSeed: Prefs.colorSeed,
+        customWorkStartSound: Prefs.customWorkStartSound,
+        customWorkEndSound: Prefs.customWorkEndSound,
+        customShortBreakStartSound: Prefs.customShortBreakStartSound,
+        customShortBreakEndSound: Prefs.customShortBreakEndSound,
+        customLongBreakStartSound: Prefs.customLongBreakStartSound,
+        customLongBreakEndSound: Prefs.customLongBreakEndSound,
       ),
     );
   }
@@ -150,5 +156,35 @@ class SettingsCubit extends Cubit<SettingsState> {
   void setColorSeed(Color? value) {
     Prefs.colorSeed = value;
     emit(state.copyWith(colorSeed: () => value));
+  }
+
+  void setCustomWorkStartSound(String value) {
+    Prefs.customWorkStartSound = value;
+    emit(state.copyWith(customWorkStartSound: () => value));
+  }
+
+  void setCustomWorkEndSound(String value) {
+    Prefs.customWorkEndSound = value;
+    emit(state.copyWith(customWorkEndSound: () => value));
+  }
+
+  void setCustomShortBreakStartSound(String value) {
+    Prefs.customShortBreakStartSound = value;
+    emit(state.copyWith(customShortBreakStartSound: () => value));
+  }
+
+  void setCustomShortBreakEndSound(String value) {
+    Prefs.customShortBreakEndSound = value;
+    emit(state.copyWith(customShortBreakEndSound: () => value));
+  }
+
+  void setCustomLongBreakStartSound(String value) {
+    Prefs.customLongBreakStartSound = value;
+    emit(state.copyWith(customLongBreakStartSound: () => value));
+  }
+
+  void setCustomLongBreakEndSound(String value) {
+    Prefs.customLongBreakEndSound = value;
+    emit(state.copyWith(customLongBreakEndSound: () => value));
   }
 }

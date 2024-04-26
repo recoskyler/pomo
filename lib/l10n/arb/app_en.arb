@@ -112,5 +112,14 @@
     "boldMono": "Bold monospace",
     "fancyMono": "Fancy monospace",
     "custom": "Custom",
-    "customFontName": "Custom font name"
+    "customFontName": "Custom font name",
+
+    "workEndSound": "Work end sound",
+    "shortBreakEndSound": "Short break end sound",
+    "longBreakEndSound": "Long break end sound",
+    "workStartSound": "Work start sound",
+    "shortBreakStartSound": "Short break start sound",
+    "longBreakStartSound": "Long break start sound",
+    "customSounds": "Custom sounds",
+    "fileNotFound": "File not found"
 }

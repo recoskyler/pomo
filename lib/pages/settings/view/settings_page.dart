@@ -51,6 +51,8 @@ class SettingsView extends StatelessWidget {
               SizedBox(height: 16),
               LapCountSlider(),
               SizedBox(height: 16),
+              CustomSoundExpansion(),
+              SizedBox(height: 16),
               WebHooksToggle(),
               WebHooksExpansion(),
             ],

@@ -1,6 +1,7 @@
 export 'always_on_top_toggle.dart';
 export 'auto_advance_toggle.dart';
 export 'color_picker.dart';
+export 'custom_sound_expansion.dart';
 export 'lap_count_slider.dart';
 export 'long_break_duration_slider.dart';
 export 'short_break_duration_slider.dart';
