@@ -1,0 +1,28 @@
+name: pomo
+version: 1.1.1+1
+summary: Pomodoro Timer
+description: A free, simple, open-source, cross-platform Pomodoro timer app with WebHook support.
+
+confinement: strict
+base: core22
+grade: stable
+
+slots:
+  dbus-pomo: # adjust accordingly to your app name
+    interface: dbus
+    bus: session
+    name: com.recoskyler.pomo # adjust accordingly to your app name and
+
+apps:
+  pomo:
+    command: pomo
+    extensions: [gnome] # gnome includes the libraries required by flutter
+    plugs:
+    - network
+    slots:
+      - dbus-pomo
+parts:
+  pomo:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart # The main entry-point file of the application
