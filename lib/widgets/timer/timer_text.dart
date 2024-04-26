@@ -5,7 +5,7 @@ import 'package:pomo/helpers/timer_helper.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
-import 'package:pomo/widgets/action_buttons.dart';
+import 'package:pomo/widgets/timer/action_buttons.dart';
 
 class TimerText extends StatelessWidget {
   const TimerText({super.key});

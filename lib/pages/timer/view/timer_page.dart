@@ -9,8 +9,8 @@ import 'package:pomo/helpers/hook_helper.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/timer.dart';
-import 'package:pomo/widgets/timer_progress.dart';
-import 'package:pomo/widgets/timer_text.dart';
+import 'package:pomo/widgets/timer/timer_progress.dart';
+import 'package:pomo/widgets/timer/timer_text.dart';
 
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key});
