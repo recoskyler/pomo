@@ -10,9 +10,10 @@ enum TriggerMethod {
 
 mixin HookHelper {
   static Future<void> postWebHook(
-    String? urls, [
+    String? urls, {
     TriggerMethod? method = TriggerMethod.post,
-  ]) async {
+    dynamic data,
+  }) async {
     if (urls == null || urls.isEmpty) {
       return;
     }
@@ -43,6 +44,7 @@ mixin HookHelper {
         final options = RequestOptions(
           method: method.toString().split('.').last.toUpperCase(),
           baseUrl: url,
+          data: data,
           validateStatus: (status) =>
               status != null && status >= 200 && status < 300,
         );
