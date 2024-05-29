@@ -32,13 +32,54 @@ A simple, cross-platform Pomodoro timer app with WebHook support.
 
 ## 🌐 Using WebHooks
 
-You can configure WebHooks from the **Settings** page.
+You can configure WebHooks from the **Settings** page. When a webhook is triggered, RGB color data in JSON format will be sent along (check below). This RGB color data corresponds to the color of the circular progress indicator on the home page. You can see an example of this data below:
+
+```json
+{
+    "rgb": [
+        255, // RED Value
+        0,   // GREEN Value
+        156, // BLUE Value
+    ]
+}
+```
+
+### Triggering multiple webhooks
 
 If you would like to trigger multiple WebHook URLs from a single event, you can enter multiple URLs separated by a comma. e.g.:
 
 `https://example.com/api/v1/webhooks/start,https://example2.com/api/v1/webhooks/toggle`
 
-The main reason I created this application was to use these WebHooks to control my ambient light using HomeAssistant.
+### HomeAssistant Integration
+
+The main reason I created this application was to use these WebHooks to control my ambient light using HomeAssistant. If you have an RGB(W) LED bulb connected to HomeAssistant, you can [create a new WebHook automation](https://www.home-assistant.io/docs/automation/trigger/#webhook-trigger), and use the sample configuration below to set your light bulb's color to the data provided by Pomo:
+
+```yaml
+alias: Timer Tick Webhook
+description: "Runs every second, whenever Pomo ticks."
+trigger:
+  - platform: webhook
+    allowed_methods:
+      - POST
+      - PUT
+    local_only: true
+    webhook_id: "-YOUR_WEBHOOK_ID"
+condition:
+  - condition: device
+    type: is_on
+    device_id: REPLACE_WITH_DEVICE_ID
+    entity_id: REPLACE_WITH_ENTITY_ID
+    domain: light
+action:
+  - service: light.turn_on
+    metadata: {}
+    data:
+      rgb_color: "{{ trigger.json['rgb'] }}"
+      transition: 1
+    target:
+      entity_id: light.192_168_1_3
+mode: single
+```
 
 ## Installing
 
@@ -125,14 +166,14 @@ Widget build(BuildContext context) {
 Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info.plist` to include the new locale.
 
 ```xml
-    ...
+...
 
-    <key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-	</array>
+<key>CFBundleLocalizations</key>
+<array>
+    <string>en</string>
+</array>
 
-    ...
+...
 ```
 
 ### Adding Translations
