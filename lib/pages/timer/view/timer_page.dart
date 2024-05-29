@@ -20,6 +20,7 @@ enum NotificationType {
   longBreakStart,
   longBreakEnd,
   startStop,
+  tick,
 }
 
 class TimerPage extends StatelessWidget {
@@ -79,11 +80,30 @@ class TimerPage extends StatelessWidget {
               .play(DeviceFileSource(settingsState.customLongBreakEndSound));
         case NotificationType.startStop:
           await player.play(AssetSource('sounds/pop.aac'));
+        case NotificationType.tick:
+          break;
       }
     } catch (e) {
       await player.stop();
       await player.play(AssetSource('sounds/ding_dong.aac'));
     }
+  }
+
+  Map<String, List<int>> _getRGBData(BuildContext context) {
+    final timerState = context.read<TimerCubit>().state;
+    final color = TimerProgress.getProgressColor(
+      status: timerState.status,
+      lap: timerState.lap,
+      context: context,
+    );
+
+    return {
+      'rgb': [
+        color.red,
+        color.green,
+        color.blue,
+      ],
+    };
   }
 
   @override
@@ -104,6 +124,24 @@ class TimerPage extends StatelessWidget {
                 );
               },
             ),
+            // TICK
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) =>
+                  current.status == TimerStatus.running &&
+                  previous.duration != current.duration,
+              listener: (context, state) {
+                Logger().i('Tick web hook');
+                _notify(
+                  NotificationType.tick,
+                  settingsState,
+                  state.status,
+                );
+                HookHelper.postWebHook(
+                  settingsState.tickWebHook,
+                  data: _getRGBData(context),
+                );
+              },
+            ),
             // WORK START
             BlocListener<TimerCubit, TimerState>(
               listenWhen: (previous, current) =>
@@ -117,7 +155,10 @@ class TimerPage extends StatelessWidget {
                   settingsState,
                   state.status,
                 );
-                HookHelper.postWebHook(settingsState.workStartWebHook);
+                HookHelper.postWebHook(
+                  settingsState.workStartWebHook,
+                  data: _getRGBData(context),
+                );
               },
             ),
             // WORK END
@@ -133,7 +174,10 @@ class TimerPage extends StatelessWidget {
                   settingsState,
                   state.status,
                 );
-                HookHelper.postWebHook(settingsState.workEndWebHook);
+                HookHelper.postWebHook(
+                  settingsState.workEndWebHook,
+                  data: _getRGBData(context),
+                );
               },
             ),
             // SHORT BREAK START
@@ -149,7 +193,10 @@ class TimerPage extends StatelessWidget {
                   settingsState,
                   state.status,
                 );
-                HookHelper.postWebHook(settingsState.shortBreakStartWebHook);
+                HookHelper.postWebHook(
+                  settingsState.shortBreakStartWebHook,
+                  data: _getRGBData(context),
+                );
               },
             ),
             // SHORT BREAK END
@@ -165,7 +212,10 @@ class TimerPage extends StatelessWidget {
                   settingsState,
                   state.status,
                 );
-                HookHelper.postWebHook(settingsState.shortBreakEndWebHook);
+                HookHelper.postWebHook(
+                  settingsState.shortBreakEndWebHook,
+                  data: _getRGBData(context),
+                );
               },
             ),
             // LONG BREAK START
@@ -181,7 +231,10 @@ class TimerPage extends StatelessWidget {
                   settingsState,
                   state.status,
                 );
-                HookHelper.postWebHook(settingsState.longBreakStartWebHook);
+                HookHelper.postWebHook(
+                  settingsState.longBreakStartWebHook,
+                  data: _getRGBData(context),
+                );
               },
             ),
             // LONG BREAK END
@@ -197,7 +250,10 @@ class TimerPage extends StatelessWidget {
                   settingsState,
                   state.status,
                 );
-                HookHelper.postWebHook(settingsState.longBreakEndWebHook);
+                HookHelper.postWebHook(
+                  settingsState.longBreakEndWebHook,
+                  data: _getRGBData(context),
+                );
               },
             ),
             BlocListener<TimerCubit, TimerState>(
@@ -207,17 +263,27 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Start timer web hook');
-                HookHelper.postWebHook(settingsState.startTimerWebHook);
+                HookHelper.postWebHook(
+                  settingsState.startTimerWebHook,
+                  data: _getRGBData(context),
+                );
 
                 switch (state.lap) {
                   case TimerLap.work:
-                    HookHelper.postWebHook(settingsState.workStartWebHook);
+                    HookHelper.postWebHook(
+                      settingsState.workStartWebHook,
+                      data: _getRGBData(context),
+                    );
                   case TimerLap.shortBreak:
                     HookHelper.postWebHook(
                       settingsState.shortBreakStartWebHook,
+                      data: _getRGBData(context),
                     );
                   case TimerLap.longBreak:
-                    HookHelper.postWebHook(settingsState.longBreakStartWebHook);
+                    HookHelper.postWebHook(
+                      settingsState.longBreakStartWebHook,
+                      data: _getRGBData(context),
+                    );
                 }
               },
             ),
@@ -228,15 +294,27 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Stop timer web hook');
-                HookHelper.postWebHook(settingsState.stopTimerWebHook);
+                HookHelper.postWebHook(
+                  settingsState.stopTimerWebHook,
+                  data: _getRGBData(context),
+                );
 
                 switch (state.lap) {
                   case TimerLap.work:
-                    HookHelper.postWebHook(settingsState.workEndWebHook);
+                    HookHelper.postWebHook(
+                      settingsState.workEndWebHook,
+                      data: _getRGBData(context),
+                    );
                   case TimerLap.shortBreak:
-                    HookHelper.postWebHook(settingsState.shortBreakEndWebHook);
+                    HookHelper.postWebHook(
+                      settingsState.shortBreakEndWebHook,
+                      data: _getRGBData(context),
+                    );
                   case TimerLap.longBreak:
-                    HookHelper.postWebHook(settingsState.longBreakEndWebHook);
+                    HookHelper.postWebHook(
+                      settingsState.longBreakEndWebHook,
+                      data: _getRGBData(context),
+                    );
                 }
               },
             ),
@@ -247,7 +325,10 @@ class TimerPage extends StatelessWidget {
                   settingsState.enableWebHooks,
               listener: (context, state) {
                 Logger().i('Reset timer web hook');
-                HookHelper.postWebHook(settingsState.resetTimerWebHook);
+                HookHelper.postWebHook(
+                  settingsState.resetTimerWebHook,
+                  data: _getRGBData(context),
+                );
               },
             ),
           ],
