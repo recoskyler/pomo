@@ -73,6 +73,7 @@
     "stopTimerWebHookUrl": "Stop timer webhook URL",
     "resetTimerWebHookUrl": "Reset timer webhook URL",
     "stateChangeWebHookUrl": "State change webhook URL",
+    "tickWebHookUrl": "Timer tick webhook URL",
 
     "language": "Language",
     "themeMode": "Theme mode",

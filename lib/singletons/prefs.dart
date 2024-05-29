@@ -100,6 +100,7 @@ class Prefs {
   static const String _startTimerWebHookVarName = 'pomo_start_timer_webhook';
   static const String _stopTimerWebHookVarName = 'pomo_stop_timer_webhook';
   static const String _resetTimerWebHookVarName = 'pomo_reset_timer_webhook';
+  static const String _tickWebHookVarName = 'pomo_tick_webhook';
   static const String _alwaysOnTopVarName = 'pomo_always_on_top';
   static const String _enableWebhooksVarName = 'pomo_enable_webhooks';
   static const String _enableSoundVarName = 'pomo_enable_sound';
@@ -204,6 +205,10 @@ class Prefs {
 
   static String get resetTimerWebHook {
     return Prefs().sharedPreferences.getString(_resetTimerWebHookVarName) ?? '';
+  }
+
+  static String get tickWebHook {
+    return Prefs().sharedPreferences.getString(_tickWebHookVarName) ?? '';
   }
 
   static int get lapCount {
@@ -342,6 +347,10 @@ class Prefs {
 
   static set resetTimerWebHook(String value) {
     Prefs().sharedPreferences.setString(_resetTimerWebHookVarName, value);
+  }
+
+  static set tickWebHook(String value) {
+    Prefs().sharedPreferences.setString(_tickWebHookVarName, value);
   }
 
   static set lapCount(int value) {

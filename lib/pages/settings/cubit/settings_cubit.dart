@@ -126,6 +126,11 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(state.copyWith(resetTimerWebHook: () => value));
   }
 
+  void setTickWebHook(String value) {
+    Prefs.tickWebHook = value;
+    emit(state.copyWith(tickWebHook: () => value));
+  }
+
   // ignore: avoid_positional_boolean_parameters
   void setEnableWebHooks(bool value) {
     Prefs.enableWebhooks = value;
