@@ -164,6 +164,21 @@ class WebHooksExpansion extends StatelessWidget {
               onChanged: (value) =>
                   context.read<SettingsCubit>().setResetTimerWebHook(value),
             ),
+            const SizedBox(height: 16),
+            Text(
+              l10n.tickWebHookUrl,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            const SizedBox(height: 8),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'https://example.com/api/v1/webhooks/timer-tick',
+                border: OutlineInputBorder(),
+              ),
+              initialValue: state.tickWebHook,
+              onChanged: (value) =>
+                  context.read<SettingsCubit>().setTickWebHook(value),
+            ),
           ],
         );
       },

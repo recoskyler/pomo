@@ -18,6 +18,7 @@ class SettingsState extends Equatable {
     this.startTimerWebHook = '',
     this.stopTimerWebHook = '',
     this.resetTimerWebHook = '',
+    this.tickWebHook = '',
     this.locale = const Locale('en'),
     this.enableWebHooks = false,
     this.enableSound = true,
@@ -55,6 +56,7 @@ class SettingsState extends Equatable {
   final String startTimerWebHook;
   final String stopTimerWebHook;
   final String resetTimerWebHook;
+  final String tickWebHook;
 
   final String timerCustomFont;
 
@@ -91,6 +93,7 @@ class SettingsState extends Equatable {
     String Function()? startTimerWebHook,
     String Function()? stopTimerWebHook,
     String Function()? resetTimerWebHook,
+    String Function()? tickWebHook,
     Locale Function()? locale,
     TriggerMethod Function()? triggerMethod,
     TimerFont Function()? timerFont,
@@ -141,6 +144,7 @@ class SettingsState extends Equatable {
       resetTimerWebHook: resetTimerWebHook != null
           ? resetTimerWebHook()
           : this.resetTimerWebHook,
+      tickWebHook: tickWebHook != null ? tickWebHook() : this.tickWebHook,
       locale: locale != null ? locale() : this.locale,
       triggerMethod:
           triggerMethod != null ? triggerMethod() : this.triggerMethod,
@@ -189,6 +193,7 @@ class SettingsState extends Equatable {
         startTimerWebHook,
         stopTimerWebHook,
         resetTimerWebHook,
+        tickWebHook,
         locale,
         triggerMethod,
         timerFont,

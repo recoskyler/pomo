@@ -8,7 +8,7 @@ import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
 class TimerProgress extends StatelessWidget {
   const TimerProgress({super.key});
 
-  Color _getProgressColor({
+  static Color getProgressColor({
     required TimerStatus status,
     required TimerLap lap,
     required BuildContext context,
@@ -59,12 +59,12 @@ class TimerProgress extends StatelessWidget {
                   );
 
                   final color = Color.lerp(
-                    _getProgressColor(
+                    getProgressColor(
                       lap: nextLap,
                       status: state.status,
                       context: context,
                     ),
-                    _getProgressColor(
+                    getProgressColor(
                       lap: state.lap,
                       status: state.status,
                       context: context,
