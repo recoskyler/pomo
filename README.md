@@ -89,8 +89,8 @@ You can either download and install one of the already-built [releases](https://
 
 ### Tech Stack
 
-- Flutter 3.19.6
-- Dart 3.3.4
+- Flutter 3.22.3
+- Dart 3.4.4
 
 This project contains 3 flavors:
 
@@ -231,9 +231,17 @@ dart run flutter_launcher_icons
 
 ### Building for the web
 
-```bash
-$ flutter build web --release -o docs
-```
+1. Enable web support:
+
+    ```bash
+    $ flutter config --enable-web
+    ```
+
+2. Build the web app:
+
+    ```bash
+    $ flutter build web --release -o docs
+    ```
 
 ### Building .APK
 
@@ -246,6 +254,24 @@ $ flutter build apk
 ### Building .DEB & .RPM (on Ubuntu 22.04)
 
 More info [here](https://docs.flutter.dev/deployment/linux) and [here](https://medium.com/@fluttergems/packaging-and-distributing-flutter-desktop-apps-the-missing-guide-part-3-linux-24ef8d30a5b4).
+
+1. Install and activate the `flutter_distributor` plugin:
+
+    ```bash
+    $ flutter pub global activate flutter_distributor
+    ```
+
+2. Install the OS dependencies:
+
+    ```bash
+    $ sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev gstreamer1.0-plugins-good gstreamer1.0-plugins-bad libgtk-3-0 libblkid1 liblzma5
+    ```
+
+3. Enable Linux desktop support:
+
+    ```bash
+    $ flutter config --enable-linux-desktop
+    ```
 
 #### Building .DEB
 
