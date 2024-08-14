@@ -1,6 +1,10 @@
 {
     "@@locale": "en",
 
+    "pomo": "Pomo",
+
+    "title": "Pomo",
+
     "lap": "Lap #{lap}",
     "@lap": {
         "placeholders": {
@@ -122,5 +126,18 @@
     "shortBreakStartSound": "Short break start sound",
     "longBreakStartSound": "Long break start sound",
     "customSounds": "Custom sounds",
-    "fileNotFound": "File not found"
+    "fileNotFound": "File not found",
+    "sourceCode": "Source code",
+
+    "timerTitle": "{time} {stoppedEmoji} | Pomo - Pomodoro timer",
+    "@timerTitle": {
+        "placeholders": {
+            "time": {
+                "type": "String"
+            },
+            "stoppedEmoji": {
+                "type": "String"
+            }
+        }
+    }
 }

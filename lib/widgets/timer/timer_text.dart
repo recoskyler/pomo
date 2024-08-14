@@ -5,10 +5,20 @@ import 'package:pomo/helpers/timer_helper.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
+import 'package:pomo/pages/timer/view/timer_page.dart';
 import 'package:pomo/widgets/timer/action_buttons.dart';
 
 class TimerText extends StatelessWidget {
-  const TimerText({super.key});
+  const TimerText({
+    required this.notify,
+    super.key,
+  });
+
+  final Future<void> Function(
+    NotificationType type,
+    SettingsState settingsState,
+    TimerStatus status,
+  ) notify;
 
   IconData _getIcon(TimerLap lap) {
     switch (lap) {
@@ -41,7 +51,7 @@ class TimerText extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context)
                         .colorScheme
-                        .onBackground
+                        .onSurface
                         .withOpacity(0.7),
                   ),
             ),
@@ -61,7 +71,7 @@ class TimerText extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            const ActionButtons(),
+            ActionButtons(notify: notify),
           ],
         );
       },
