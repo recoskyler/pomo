@@ -1,13 +1,22 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
+import 'package:pomo/pages/timer/view/timer_page.dart';
 
 class ActionButtons extends StatefulWidget {
   const ActionButtons({
     super.key,
+    required this.notify,
   });
+
+  final Future<void> Function(
+    NotificationType type,
+    SettingsState settingsState,
+    TimerStatus status,
+  ) notify;
 
   @override
   State<ActionButtons> createState() => _ActionButtonsState();
@@ -19,6 +28,8 @@ class _ActionButtonsState extends State<ActionButtons>
   late AnimationController _resetController;
   late AnimationController _skipController;
   late Animation<double> _animation;
+
+  final player = AudioPlayer();
 
   @override
   void initState() {
@@ -129,6 +140,12 @@ class _ActionButtonsState extends State<ActionButtons>
                   return IconButton.filledTonal(
                     tooltip: l10n.skipLap,
                     onPressed: () {
+                      widget.notify(
+                        NotificationType.nextLap,
+                        settingsState,
+                        state.status,
+                      );
+
                       _skipController
                           .forward(from: 0)
                           .then((_) => _skipController.reverse());
