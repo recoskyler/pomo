@@ -8,8 +8,8 @@ import 'package:pomo/pages/timer/view/timer_page.dart';
 
 class ActionButtons extends StatefulWidget {
   const ActionButtons({
-    super.key,
     required this.notify,
+    super.key,
   });
 
   final Future<void> Function(

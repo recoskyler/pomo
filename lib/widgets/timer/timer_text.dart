@@ -51,7 +51,7 @@ class TimerText extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Theme.of(context)
                         .colorScheme
-                        .onBackground
+                        .onSurface
                         .withOpacity(0.7),
                   ),
             ),
