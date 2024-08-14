@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/web.dart';
+import 'package:pomo/helpers/duration_helper.dart';
 import 'package:pomo/helpers/hook_helper.dart';
 import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/timer.dart';
 import 'package:pomo/widgets/timer/timer_progress.dart';
 import 'package:pomo/widgets/timer/timer_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum NotificationType {
   workStart,
@@ -20,6 +22,7 @@ enum NotificationType {
   longBreakStart,
   longBreakEnd,
   startStop,
+  nextLap,
   tick,
 }
 
@@ -60,28 +63,45 @@ class TimerPage extends StatelessWidget {
     final player = AudioPlayer();
 
     try {
+      var sourceFile = '';
+
       switch (type) {
         case NotificationType.workStart:
-          await player
-              .play(DeviceFileSource(settingsState.customWorkStartSound));
+          Logger().d('NotificationType.workStart');
+          sourceFile = settingsState.customWorkStartSound;
         case NotificationType.workEnd:
-          await player.play(DeviceFileSource(settingsState.customWorkEndSound));
+          Logger().d('NotificationType.workEnd');
+          sourceFile = settingsState.customWorkEndSound;
         case NotificationType.shortBreakStart:
-          await player
-              .play(DeviceFileSource(settingsState.customShortBreakStartSound));
+          Logger().d('NotificationType.shortBreakStart');
+          sourceFile = settingsState.customShortBreakStartSound;
         case NotificationType.shortBreakEnd:
-          await player
-              .play(DeviceFileSource(settingsState.customShortBreakEndSound));
+          Logger().d('NotificationType.shortBreakEnd');
+          sourceFile = settingsState.customShortBreakEndSound;
         case NotificationType.longBreakStart:
-          await player
-              .play(DeviceFileSource(settingsState.customLongBreakStartSound));
+          Logger().d('NotificationType.longBreakStart');
+          sourceFile = settingsState.customLongBreakStartSound;
         case NotificationType.longBreakEnd:
-          await player
-              .play(DeviceFileSource(settingsState.customLongBreakEndSound));
+          Logger().d('NotificationType.longBreakEnd');
+          sourceFile = settingsState.customLongBreakEndSound;
         case NotificationType.startStop:
           await player.play(AssetSource('sounds/pop.aac'));
+        case NotificationType.nextLap:
+          Logger().d('NotificationType.nextLap');
+          await player.play(AssetSource('sounds/ding_dong.aac'));
         case NotificationType.tick:
           break;
+      }
+
+      final source = sourceFile == ''
+          ? AssetSource('sounds/ding_dong.aac')
+          : DeviceFileSource(sourceFile);
+
+      if (type != NotificationType.startStop &&
+          type != NotificationType.tick &&
+          type != NotificationType.nextLap &&
+          sourceFile != '') {
+        await player.play(source);
       }
     } catch (e) {
       await player.stop();
@@ -124,13 +144,25 @@ class TimerPage extends StatelessWidget {
                 );
               },
             ),
+            // SKIP/NEXT LAP
+            BlocListener<TimerCubit, TimerState>(
+              listenWhen: (previous, current) => previous.lap != current.lap,
+              listener: (context, state) {
+                Logger().i('SKIP/NEXT LAP');
+                _notify(
+                  NotificationType.nextLap,
+                  settingsState,
+                  state.status,
+                );
+              },
+            ),
             // TICK
             BlocListener<TimerCubit, TimerState>(
               listenWhen: (previous, current) =>
                   current.status == TimerStatus.running &&
                   previous.duration != current.duration,
               listener: (context, state) {
-                Logger().i('Tick web hook');
+                // Logger().i('Tick web hook');
                 _notify(
                   NotificationType.tick,
                   settingsState,
@@ -332,7 +364,7 @@ class TimerPage extends StatelessWidget {
               },
             ),
           ],
-          child: const TimerView(),
+          child: TimerView(notify: _notify),
         );
       },
     );
@@ -340,7 +372,13 @@ class TimerPage extends StatelessWidget {
 }
 
 class TimerView extends StatefulWidget {
-  const TimerView({super.key});
+  const TimerView({required this.notify, super.key});
+
+  final Future<void> Function(
+    NotificationType type,
+    SettingsState settingsState,
+    TimerStatus status,
+  ) notify;
 
   @override
   State<TimerView> createState() => _TimerViewState();
@@ -369,6 +407,14 @@ class _TimerViewState extends State<TimerView> {
     super.dispose();
   }
 
+  Future<void> _launchUrl() async {
+    final uri = Uri.parse('https://github.com/recoskyler/pomo');
+
+    if (!await launchUrl(uri)) {
+      Logger().e('Failed to launch GitHub link');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -389,49 +435,79 @@ class _TimerViewState extends State<TimerView> {
         ),
         actions: [
           IconButton(
+            tooltip: l10n.sourceCode,
+            icon: const Icon(Icons.code),
+            onPressed: _launchUrl,
+          ),
+          const SizedBox(width: 16),
+          IconButton(
             tooltip: l10n.settings,
             icon: const Icon(Icons.settings),
             onPressed: () => Navigator.pushNamed(context, '/settings'),
           ),
         ],
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: BlocBuilder<SettingsCubit, SettingsState>(
+      body: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, settingsState) {
+          return BlocBuilder<TimerCubit, TimerState>(
             builder: (context, state) {
-              return KeyboardListener(
-                focusNode: _focusNode,
-                autofocus: true,
-                onKeyEvent: (value) {
-                  if (value is! KeyUpEvent) {
-                    return;
-                  }
+              final duration = DurationHelper.negativeFormat(
+                duration: state.duration,
+                lap: state.lap,
+                settingsState: settingsState,
+              );
 
-                  switch (value.logicalKey) {
-                    case LogicalKeyboardKey.enter:
-                      context.read<TimerCubit>().toggle();
-                    case LogicalKeyboardKey.space:
-                      context.read<TimerCubit>().toggle();
-                    case LogicalKeyboardKey.backspace:
-                      context.read<TimerCubit>().reset();
-                    case LogicalKeyboardKey.keyR:
-                      context.read<TimerCubit>().reset();
-                    case LogicalKeyboardKey.keyS:
-                      context.read<TimerCubit>().lap(settingsState: state);
-                  }
-                },
-                child: const Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Center(child: TimerProgress()),
-                    Center(child: TimerText()),
-                  ],
+              return Title(
+                title: l10n.timerTitle(duration),
+                color: Colors.pinkAccent,
+                child: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: BlocBuilder<SettingsCubit, SettingsState>(
+                      builder: (context, state) {
+                        return KeyboardListener(
+                          focusNode: _focusNode,
+                          autofocus: true,
+                          onKeyEvent: (value) {
+                            if (value is! KeyUpEvent) {
+                              return;
+                            }
+
+                            switch (value.logicalKey) {
+                              case LogicalKeyboardKey.enter:
+                                context.read<TimerCubit>().toggle();
+                              case LogicalKeyboardKey.space:
+                                context.read<TimerCubit>().toggle();
+                              case LogicalKeyboardKey.backspace:
+                                context.read<TimerCubit>().reset();
+                              case LogicalKeyboardKey.keyR:
+                                context.read<TimerCubit>().reset();
+                              case LogicalKeyboardKey.keyS:
+                                context
+                                    .read<TimerCubit>()
+                                    .lap(settingsState: state);
+                            }
+                          },
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              const Center(child: TimerProgress()),
+                              Center(
+                                child: TimerText(
+                                  notify: widget.notify,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               );
             },
-          ),
-        ),
+          );
+        },
       ),
     );
   }
