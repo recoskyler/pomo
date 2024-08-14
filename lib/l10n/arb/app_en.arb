@@ -129,10 +129,13 @@
     "fileNotFound": "File not found",
     "sourceCode": "Source code",
 
-    "timerTitle": "{time} | Pomo - Pomodoro timer",
+    "timerTitle": "{time} {stoppedEmoji} | Pomo - Pomodoro timer",
     "@timerTitle": {
         "placeholders": {
             "time": {
+                "type": "String"
+            },
+            "stoppedEmoji": {
                 "type": "String"
             }
         }

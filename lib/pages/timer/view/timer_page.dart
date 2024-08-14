@@ -415,6 +415,26 @@ class _TimerViewState extends State<TimerView> {
     }
   }
 
+  String _getEmoji(TimerLap lap) {
+    switch (lap) {
+      case TimerLap.work:
+        return '💼';
+      case TimerLap.shortBreak:
+        return '☕';
+      case TimerLap.longBreak:
+        return '🏖';
+    }
+  }
+
+  String _getStoppedEmoji(TimerStatus status) {
+    switch (status) {
+      case TimerStatus.stopped:
+        return '⏸';
+      case TimerStatus.running:
+        return '⏱';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -457,8 +477,12 @@ class _TimerViewState extends State<TimerView> {
                 settingsState: settingsState,
               );
 
+              final emoji = _getEmoji(state.lap);
+              final stoppedEmoji = _getStoppedEmoji(state.status);
+              final title = '$emoji ${l10n.timerTitle(duration, stoppedEmoji)}';
+
               return Title(
-                title: l10n.timerTitle(duration),
+                title: title,
                 color: Colors.pinkAccent,
                 child: SafeArea(
                   child: Padding(
