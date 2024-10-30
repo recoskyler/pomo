@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pomo/helpers/hook_helper.dart';
+import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum TimerFont {
@@ -119,6 +120,10 @@ class Prefs {
   static const String _customLongBreakEndSoundVarName =
       'pomo_custom_long_break_end_sound';
   static const String _customWorkEndSoundVarName = 'pomo_custom_work_end_sound';
+  static const String _lapNumberVarName = 'pomo_lap_number';
+  static const String _timerStatusVarName = 'pomo_timer_status';
+  static const String _durationVarName = 'pomo_duration';
+  static const String _timerLapVarName = 'pomo_timer_lap';
 
   //* Getters
 
@@ -291,6 +296,31 @@ class Prefs {
         '';
   }
 
+  static TimerStatus get timerStatus {
+    return TimerStatus.values
+        .elementAt(Prefs().sharedPreferences.getInt(_timerStatusVarName) ?? 1);
+  }
+
+  static int get lapNumber {
+    return Prefs().sharedPreferences.getInt(_lapNumberVarName) ?? 0;
+  }
+
+  static Duration get duration {
+    final storedVal = Prefs().sharedPreferences.getInt(_durationVarName) ?? 0;
+
+    if (storedVal == 0) {
+      return Duration.zero;
+    }
+
+    return Duration(seconds: storedVal);
+  }
+
+  static TimerLap get timerLap {
+    final storedVal = Prefs().sharedPreferences.getInt(_timerLapVarName);
+
+    return TimerLap.values[storedVal ?? 0];
+  }
+
   //* Setters
 
   static set themeMode(ThemeMode value) {
@@ -424,5 +454,28 @@ class Prefs {
 
   static set customWorkEndSound(String value) {
     Prefs().sharedPreferences.setString(_customWorkEndSoundVarName, value);
+  }
+
+  static set timerStatus(TimerStatus value) {
+    Prefs().sharedPreferences.setInt(_timerStatusVarName, value.index);
+  }
+
+  static set lapNumber(int value) {
+    Prefs().sharedPreferences.setInt(_lapNumberVarName, value);
+  }
+
+  static set timerLap(TimerLap value) {
+    Prefs().sharedPreferences.setInt(_timerLapVarName, value.index);
+  }
+
+  static set duration(Duration value) {
+    Prefs().sharedPreferences.setInt(_durationVarName, value.inSeconds);
+  }
+
+  static void resetTimer() {
+    Prefs().sharedPreferences.remove(_timerStatusVarName);
+    Prefs().sharedPreferences.remove(_durationVarName);
+    Prefs().sharedPreferences.remove(_lapNumberVarName);
+    Prefs().sharedPreferences.remove(_timerLapVarName);
   }
 }

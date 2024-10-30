@@ -5,6 +5,7 @@ import 'package:pomo/l10n/l10n.dart';
 import 'package:pomo/pages/settings/cubit/settings_cubit.dart';
 import 'package:pomo/pages/timer/cubit/timer_cubit.dart';
 import 'package:pomo/pages/timer/view/timer_page.dart';
+import 'package:pomo/singletons/prefs.dart';
 
 class ActionButtons extends StatefulWidget {
   const ActionButtons({
@@ -38,6 +39,7 @@ class _ActionButtonsState extends State<ActionButtons>
     _controller = AnimationController(
       vsync: this,
       duration: Durations.long2,
+      value: Prefs.timerStatus == TimerStatus.running ? 1 : 0,
     );
 
     _resetController = AnimationController(
