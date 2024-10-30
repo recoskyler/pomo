@@ -89,8 +89,8 @@ You can either download and install one of the already-built [releases](https://
 
 ### Tech Stack
 
-- Flutter 3.22.3
-- Dart 3.4.4
+- Flutter 3.24.4
+- Dart 3.5.4
 
 This project contains 3 flavors:
 
