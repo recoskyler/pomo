@@ -15,7 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.0
-  flutter_bloc: ^8.1.4
+  flutter_bloc: ^8.1.6
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.10+1
