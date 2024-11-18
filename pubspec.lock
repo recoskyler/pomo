@@ -21,26 +21,26 @@ packages:
     dependency: transitive
     description:
       name: ansicolor
-      sha256: "8bf17a8ff6ea17499e40a2d2542c2f481cd7615760c6d34065cb22bfd22e6880"
+      sha256: "50e982d500bc863e1d703448afdbf9e5a72eb48840a4f766fa361ffd6877055f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   archive:
     dependency: transitive
     description:
       name: archive
-      sha256: "22600aa1e926be775fa5fe7e6894e7fb3df9efda8891c73f70fb3262399a432d"
+      sha256: cb6a278ef2dbb298455e1a713bda08524a175630ec643a242c399c932a0a1f7d
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.10"
+    version: "3.6.1"
   args:
     dependency: transitive
     description:
       name: args
-      sha256: "7cf60b9f0cc88203c5a190b4cd62a99feea42759a7fa695010eb5de1c0b2252a"
+      sha256: bf9f5caeea8d8fe6721a9c358dd8a5c1947b27f1cfaa18b39c301273594919e6
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.0"
   async:
     dependency: transitive
     description:
@@ -311,10 +311,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_native_splash
-      sha256: edf39bcf4d74aca1eb2c1e43c3e445fd9f494013df7f0da752fefe72020eedc0
+      sha256: "1152ab0067ca5a2ebeb862fe0a762057202cceb22b7e62692dcbabf6483891bb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.4.3"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -401,10 +401,10 @@ packages:
     dependency: transitive
     description:
       name: image
-      sha256: "4c68bfd5ae83e700b5204c1e74451e7bf3cf750e6843c6e158289cf56bda018e"
+      sha256: f31d52537dc417fdcde36088fdf11d191026fd5e4fae742491ebd40e5a8bea7d
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.7"
+    version: "4.3.0"
   intl:
     dependency: "direct main"
     description:
@@ -645,14 +645,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pointycastle:
-    dependency: transitive
-    description:
-      name: pointycastle
-      sha256: "79fbafed02cfdbe85ef3fd06c7f4bc2cbcba0177e61b765264853d4253b21744"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.0"
   pool:
     dependency: transitive
     description:
