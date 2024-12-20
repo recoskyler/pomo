@@ -89,7 +89,7 @@ You can either download and install one of the already-built [releases](https://
 
 ### Tech Stack
 
-- Flutter 3.24.4
+- Flutter 3.27.1
 - Dart 3.5.4
 
 This project contains 3 flavors:
