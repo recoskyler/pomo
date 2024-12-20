@@ -78,11 +78,12 @@ class AboutPage extends StatelessWidget {
                 const SizedBox(height: 16),
                 RichText(
                   text: TextSpan(
+                    style: Theme.of(context).textTheme.bodyMedium,
                     children: [
                       TextSpan(text: l10n.madeBy1),
                       TextSpan(
                         text: 'recoskyler',
-                        style: TextStyle(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.error,
                         ),
